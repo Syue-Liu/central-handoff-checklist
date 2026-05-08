@@ -98,8 +98,11 @@ body{min-height:100vh;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 260
 .group-chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .group-chip{padding:9px 4px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:750;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none;text-align:center}
 .group-chip.on{background:var(--pu-bg);border-color:var(--pu-bd);color:var(--pu);box-shadow:0 0 0 3px rgba(104,65,163,.08)}
-.relay-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.relay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .relay-room-grid{display:flex;flex-wrap:wrap;gap:7px}
+.relay-main{display:block;font-weight:800;font-size:12px;line-height:1.25}
+.relay-sub{display:block;font-size:10px;line-height:1.25;opacity:.72;margin-top:2px}
+.relay-custom{display:grid;grid-template-columns:1fr 74px;gap:7px;align-items:center}
 .pu-chips{display:flex;flex-wrap:wrap;gap:6px}
 .pu-chip{padding:7px 12px;border:1px solid var(--bd2);border-radius:999px;font-size:12px;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none}
 .pu-chip.on{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);font-weight:650}
@@ -212,7 +215,13 @@ const TEST_PERSONS=['彥宇','偉偉','佳學','77'];
 const BIZ_OWNERS=['沙課','武勇','定洲','vickey','joy','冠輝','三和','瑋平','忠謙'];
 const TV_PURPOSES=['簡報','開場','主視覺'];
 const TV_GROUPS=[1,2,3,4,5,6].map(n=>`群組${n}`);
-const RELAY_INPUTS=[1,2,3,4,5];
+const RELAY_INPUTS=[
+  {n:1,src:'8x8 OUT-5'},
+  {n:2,src:'8x8 OUT-6'},
+  {n:3,src:'8x8 OUT-7'},
+  {n:4,src:'8x8 OUT-8'},
+  {n:5,src:'攝影機'}
+];
 const RELAY_OUTPUTS=[11,12,13,14,15,16];
 const RELAY_ROOMS={
   '1101':['1102','1103','1110a','1110b','1110c','1110d'],
@@ -339,6 +348,58 @@ function vendorHtml(){
     </div>`).join('')}</div>`;
 }
 
+function relayInText(v){
+  const item=RELAY_INPUTS.find(x=>String(x.n)===String(v));
+  return item?`IN${item.n}（${item.src}）`:'─';
+}
+function relayOutText(v){return v?`OUT${v}`:'─'}
+function relayHtml(s){
+  return`<div class="card">
+    <div class="card-hd"><span class="card-ico">🔁</span><span class="card-lbl">串場需求</span></div>
+    <div class="card-bd">
+      <div class="row2">
+        <div class="field">
+          <label>HDMI 輸入訊號</label>
+          <div class="relay-grid">
+            ${RELAY_INPUTS.map(item=>`
+              <div class="group-chip single-chip${s.relayIn==item.n?' on':''}" data-k="relayIn" data-v="${item.n}" onclick="setSingle(this)">
+                <span class="relay-main">IN ${item.n}</span><span class="relay-sub">${item.src}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div class="field">
+          <label>HDMI 輸出訊號</label>
+          <div class="relay-grid">
+            ${RELAY_OUTPUTS.map(n=>`
+              <div class="group-chip single-chip${s.relayOut==n?' on':''}" data-k="relayOut" data-v="${n}" onclick="setSingle(this)">OUT ${n}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>串到會議室</label>
+        <div class="relay-room-grid">
+          ${(RELAY_ROOMS[cur]||[]).map(room=>`
+            <div class="chip${(s.relayRooms||[]).includes(room)?' on':''}" data-g="relayRooms" data-v="${room}" onclick="toggleChip(this)">${room}</div>`).join('')}
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>自訂會議室 1</label>
+          <div class="relay-custom">
+            <input id="relayCustom1" placeholder="其他會議室" value="${esc(s.relayCustom1)}">
+            <div class="group-chip single-chip${s.relayCustom1On?' on':''}" data-k="relayCustom1On" data-v="1" onclick="setSingle(this)">套用</div>
+          </div>
+        </div>
+        <div class="field"><label>自訂會議室 2</label>
+          <div class="relay-custom">
+            <input id="relayCustom2" placeholder="其他會議室" value="${esc(s.relayCustom2)}">
+            <div class="group-chip single-chip${s.relayCustom2On?' on':''}" data-k="relayCustom2On" data-v="1" onclick="setSingle(this)">套用</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
 /* ── render ── */
 function render(){
   const s=S(),r=RM[cur],d=AD();
@@ -431,43 +492,6 @@ function render(){
   </div>
 
   <div class="card">
-    <div class="card-hd"><span class="card-ico">🔁</span><span class="card-lbl">串場需求</span></div>
-    <div class="card-bd">
-      <div class="row2">
-        <div class="field">
-          <label>HDMI 輸入訊號</label>
-          <div class="relay-grid">
-            ${RELAY_INPUTS.map(n=>`
-              <div class="group-chip single-chip${s.relayIn==n?' on':''}" data-k="relayIn" data-v="${n}" onclick="setSingle(this)">IN ${n}</div>`).join('')}
-          </div>
-        </div>
-        <div class="field">
-          <label>HDMI 輸出訊號</label>
-          <div class="relay-grid">
-            ${RELAY_OUTPUTS.map(n=>`
-              <div class="group-chip single-chip${s.relayOut==n?' on':''}" data-k="relayOut" data-v="${n}" onclick="setSingle(this)">OUT ${n}</div>`).join('')}
-          </div>
-        </div>
-      </div>
-      <div class="field">
-        <label>串到會議室</label>
-        <div class="relay-room-grid">
-          ${(RELAY_ROOMS[cur]||[]).map(room=>`
-            <div class="chip${(s.relayRooms||[]).includes(room)?' on':''}" data-g="relayRooms" data-v="${room}" onclick="toggleChip(this)">${room}</div>`).join('')}
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>自訂會議室 1</label>
-          <input id="relayCustom1" placeholder="其他會議室" value="${esc(s.relayCustom1)}">
-        </div>
-        <div class="field"><label>自訂會議室 2</label>
-          <input id="relayCustom2" placeholder="其他會議室" value="${esc(s.relayCustom2)}">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
     <div class="card-hd"><span class="card-ico">💡</span><span class="card-lbl">燈光設定</span></div>
     <div class="card-bd">
       ${ltSceneListHtml()}
@@ -493,6 +517,8 @@ function render(){
       </div>
     </div>
   </div>
+
+  ${relayHtml(s)}
 
   <div class="card">
     <div class="card-hd"><span class="card-ico">📝</span><span class="card-lbl">備註</span></div>
@@ -677,14 +703,6 @@ sep,
   if((s.mixerNote||'').trim())rows.push(`└ 混音備註：${s.mixerNote.trim()}`);
   else rows.push('└ 無備註');
 
-  const relayRooms=[...(s.relayRooms||[])];
-  [s.relayCustom1,s.relayCustom2].forEach(v=>{if((v||'').trim())relayRooms.push(v.trim())});
-  if(s.relayIn||s.relayOut||relayRooms.length){
-    rows.push(``,`🔁 串場需求`);
-    rows.push(`└ HDMI：${s.relayIn?'IN'+s.relayIn:'─'} → ${s.relayOut?'OUT'+s.relayOut:'─'}`);
-    rows.push(`└ 會議室：${relayRooms.join('、')||'─'}`);
-  }
-
   rows.push(``,`💡 燈光設定`);
   const lsc=ltSc();
   if(lsc.length){
@@ -695,6 +713,15 @@ sep,
       rows.push(`  └${subSep}`);
     });
   }else rows.push('  尚未設定燈光場景');
+
+  const relayRooms=[...(s.relayRooms||[])];
+  if(s.relayCustom1On&&(s.relayCustom1||'').trim())relayRooms.push(s.relayCustom1.trim());
+  if(s.relayCustom2On&&(s.relayCustom2||'').trim())relayRooms.push(s.relayCustom2.trim());
+  if(s.relayIn||s.relayOut||relayRooms.length){
+    rows.push(``,`🔁 串場需求`);
+    rows.push(`└ HDMI：${relayInText(s.relayIn)} → ${relayOutText(s.relayOut)}`);
+    rows.push(`└ 會議室：${relayRooms.join('、')||'─'}`);
+  }
 
   if((s.notes||'').trim())rows.push(``,`📝 備註：${s.notes.trim()}`);
   rows.push(``,`🧪 測試資訊`);
