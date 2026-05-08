@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>中控交接清單 — 張榮發基金會</title>
+<style>
+:root{
+  --bg:#f0efe9;--sf:#fff;--sf2:#f6f5f2;
+  --ac:#1a73e8;--ac-bg:#e8f0fe;--ac-bd:#a8c7fa;--ac-tx:#1557b0;
+  --ok:#1a7a50;--ok-bg:#e6f4ee;--ok-bd:#86c9a8;
+  --no:#b03020;--no-bg:#fde8e6;--no-bd:#f5a8a4;
+  --wa:#7a4a00;--wa-bg:#fff3e0;--wa-bd:#ffcc80;
+  --pu:#5b21b6;--pu-bg:#ede9fe;--pu-bd:#c4b5fd;
+  --tx:#1c1c1e;--tx2:#6e6e73;--tx3:#b0afab;
+  --bd:#e0ddd6;--bd2:#c8c4bc;
+  --r:12px;--rs:8px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#1c1c1e;--sf:#2c2c2e;--sf2:#3a3a3c;
+  --tx:#f2f2f7;--tx2:#aeaeb2;--tx3:#6e6e73;
+  --bd:#3a3a3c;--bd2:#5a5a5e;
+  --ac-bg:#1c3055;--ac-bd:#3b6bb5;--ac-tx:#82b4f5;
+  --ok-bg:#0f3324;--ok-bd:#2d6b4a;
+  --no-bg:#3a1a18;--no-bd:#7a3a36;
+  --wa-bg:#3a2800;--wa-bd:#9a6e00;--wa:#e8a020;
+  --pu-bg:#2d1b69;--pu-bd:#7c3aed;--pu:#a78bfa;
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,'Helvetica Neue','Noto Sans TC',sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
+
+.hdr{background:var(--sf);border-bottom:1px solid var(--bd);padding:13px 18px;position:sticky;top:0;z-index:100}
+.hdr-title{font-size:17px;font-weight:600;display:flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:#34c759;flex-shrink:0}
+.hdr-sub{font-size:12px;color:var(--tx2);margin-top:3px}
+
+.rnav{background:var(--sf);border-bottom:1px solid var(--bd);display:flex;padding:0 18px}
+.rtab{flex-shrink:0;padding:11px 14px;border:none;background:transparent;color:var(--tx2);font-size:14px;font-weight:500;cursor:pointer;border-bottom:2.5px solid transparent;transition:all .15s;font-family:inherit}
+.rtab.on{color:var(--ac);border-bottom-color:var(--ac);font-weight:600}
+
+.main{padding:14px 18px 40px;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:11px}
+
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.card-hd{padding:10px 15px;border-bottom:1px solid var(--bd);background:var(--sf2);display:flex;align-items:center;gap:7px}
+.card-ico{font-size:14px;line-height:1}
+.card-lbl{font-size:11px;font-weight:600;color:var(--tx2);letter-spacing:.5px;text-transform:uppercase}
+.card-bd{padding:15px;display:flex;flex-direction:column;gap:12px}
+.inner-div{height:1px;background:var(--bd);margin:2px 0}
+
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12px;color:var(--tx2);font-weight:500}
+.field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1px solid var(--bd2);border-radius:var(--rs);background:var(--sf2);color:var(--tx);font-size:14px;font-family:inherit;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(26,115,232,.1)}
+.field textarea{resize:vertical;min-height:72px;line-height:1.6}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+
+/* arrival */
+.aopts{display:flex;gap:6px}
+.aopt{flex:1;padding:9px 4px;border:1px solid var(--bd2);border-radius:var(--rs);background:var(--sf2);color:var(--tx2);text-align:center;cursor:pointer;transition:all .15s;user-select:none}
+.aopt-t{font-size:15px;font-weight:600;display:block}
+.aopt-s{font-size:11px;opacity:.7;display:block;margin-top:1px}
+.aopt.on{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa);font-weight:600}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.chip{padding:6px 12px;border:1px solid var(--bd2);border-radius:20px;font-size:13px;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx);font-weight:500}
+
+/* vendor 3-option */
+.vendor-opts{display:flex;flex-direction:column;gap:6px}
+.vendor-opt{padding:11px 14px;border:1px solid var(--bd2);border-radius:var(--rs);background:var(--sf2);color:var(--tx2);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;user-select:none;display:flex;align-items:center;gap:10px}
+.vo-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);flex-shrink:0;transition:background .15s}
+.vendor-opt.v-none{border-color:var(--tx3);color:var(--tx2)}.vendor-opt.v-none .vo-dot{background:var(--tx3)}
+.vendor-opt.v-audio{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}.vendor-opt.v-audio .vo-dot{background:var(--ok)}
+.vendor-opt.v-sys{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}.vendor-opt.v-sys .vo-dot{background:var(--ac)}
+
+/* matrix chips */
+.pt-mx-block{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.pt-mx-row{border:1px solid var(--ac-bd);border-radius:var(--rs);overflow:hidden}
+.pt-mx-hd{background:var(--ac-bg);padding:6px 10px;font-size:12px;font-weight:600;color:var(--ac-tx)}
+.pt-mx-bd{padding:8px 10px}
+.pt-mx-hint{font-size:11px;color:var(--tx3);margin-bottom:5px}
+.mx-chips{display:flex;flex-wrap:wrap;gap:5px}
+.mx-chip{padding:5px 8px;border:1px solid var(--bd2);border-radius:6px;font-size:12px;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .12s;user-select:none;text-align:center;min-width:44px}
+.mx-chip .mn{display:block;font-weight:600;font-size:11px;line-height:1.3}
+.mx-chip .ml{display:block;font-size:10px;opacity:.65;line-height:1.2}
+.mx-chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}
+.pt-empty{font-size:12px;color:var(--tx3);padding:2px 0;font-style:italic}
+
+/* TV wall */
+.tv-modes{display:flex;flex-wrap:wrap;gap:6px}
+.tv-chip{padding:7px 12px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:500;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.tv-chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}
+.pu-chips{display:flex;flex-wrap:wrap;gap:6px}
+.pu-chip{padding:5px 12px;border:1px solid var(--bd2);border-radius:20px;font-size:12px;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.pu-chip.on{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);font-weight:500}
+.tv-custom{display:flex;align-items:center;gap:7px;margin-top:6px}
+.tv-custom span{font-size:12px;color:var(--tx2);white-space:nowrap}
+
+/* light scene chips */
+.lt-chips{display:flex;flex-wrap:wrap;gap:6px}
+.lt-chip{padding:6px 11px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:500;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.lt-chip.on{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa)}
+
+/* scene list */
+.scene-list{display:flex;flex-direction:column;gap:7px}
+.scene-item{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;display:flex;align-items:flex-start;gap:8px}
+.scene-num{width:22px;height:22px;border-radius:50%;background:var(--ac-bg);border:1px solid var(--ac-bd);color:var(--ac-tx);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.lt-num{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa)}
+.scene-body{flex:1;display:flex;flex-direction:column;gap:3px}
+.scene-line1{font-size:13px;color:var(--tx);font-weight:500;line-height:1.4}
+.scene-line2{font-size:12px;color:var(--tx2)}
+.scene-del{border:none;background:transparent;color:var(--tx3);font-size:16px;cursor:pointer;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0}
+.scene-del:hover{color:var(--no)}
+
+/* draft section */
+.draft-wrap{display:flex;flex-direction:column;gap:12px;padding-top:4px}
+.draft-sep{height:1px;background:var(--bd);margin:4px 0}
+.draft-lbl{font-size:11px;font-weight:600;color:var(--tx3);letter-spacing:.4px;text-transform:uppercase;padding-bottom:2px}
+
+/* add buttons */
+.btn-add{width:100%;padding:11px;border:1.5px dashed var(--ac-bd);border-radius:var(--rs);background:var(--ac-bg);color:var(--ac-tx);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-add:active{opacity:.8}
+.btn-add-lt{border-color:var(--wa-bd);background:var(--wa-bg);color:var(--wa)}
+
+/* test info */
+.test-card .card-hd{background:var(--pu-bg);border-color:var(--pu-bd)}
+.test-card .card-lbl{color:var(--pu)}
+
+/* actions */
+.actions{display:flex;flex-direction:column;gap:7px;padding-bottom:16px}
+.btn-copy{width:100%;padding:14px;border:none;border-radius:var(--r);background:var(--ac);color:#fff;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-copy:active{opacity:.82}
+.btn-email{background:var(--ok)}
+.btn-clr{width:100%;padding:9px;border:1px solid var(--bd2);border-radius:var(--rs);background:transparent;color:var(--tx2);font-size:13px;cursor:pointer;font-family:inherit;transition:background .15s}
+.btn-clr:hover{background:var(--sf2)}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:#1a7a50;color:#fff;padding:11px 22px;border-radius:22px;font-size:14px;font-weight:500;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;z-index:999}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.err{background:#b03020}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="hdr">
+  <div class="hdr-title"><span class="dot"></span>中控交接清單</div>
+  <div class="hdr-sub">張榮發基金會 · 影音設備交接</div>
+</div>
+
+<div class="rnav">
+  <button class="rtab on" onclick="sw('1101',this)">1101廳</button>
+  <button class="rtab" onclick="sw('1001',this)">1001廳</button>
+  <button class="rtab" onclick="sw('801',this)">801廳</button>
+</div>
+
+<div class="main" id="form"></div>
+
+<script>
+const RM={
+  '1101':{label:'1101廳',hasStageLight:true,
+    pts:['左側舞台','中側舞台','右側舞台','電視牆後方','後方分配盤','中控室接點'],
+    mx:[{n:1,l:'舞台右'},{n:2,l:'電視牆後1'},{n:3,l:'電視牆後2'},{n:4,l:'電視牆後3'},
+        {n:5,l:'外接1'},{n:6,l:'外接2'},{n:7,l:'16x16'},{n:8,l:'中控'}],
+    tvModes:['全屏','2畫面','3畫面(黑)','3畫面','全:1:全','1:全:1','自訂1','自訂2','自訂3','展示']},
+  '1001':{label:'1001廳',hasStageLight:false,
+    pts:['左側舞台','右側舞台','第一排座位','後方分配盤'],
+    mx:[{n:1,l:'講台右'},{n:2,l:'講台右2'},{n:3,l:'座位區'},{n:4,l:'外接1'},
+        {n:5,l:'外接2'},{n:6,l:'外接3'},{n:7,l:'16x16 Out1'},{n:8,l:'中控'}],
+    tvModes:['全屏','3畫面(黑)','4畫面(黑)','1:2:1','1:全版:1','3畫面(底)','4畫面','自訂1','自訂2','展示']},
+  '801':{label:'801廳',hasStageLight:false,
+    pts:['左側舞台','右側舞台','第一排座位','後方分配盤'],
+    mx:[{n:1,l:'講台右'},{n:2,l:'講台右2'},{n:3,l:'座位區'},{n:4,l:'外接1'},
+        {n:5,l:'外接2'},{n:6,l:'外接3'},{n:7,l:'16x16 Out1'},{n:8,l:'中控'}],
+    tvModes:['全屏','3畫面(黑)','4畫面(黑)','1:2:1','1:全版:1','3畫面(底)','4畫面','自訂1','自訂2','展示']}
+};
+const ARRIVE=[['07:30','提早'],['08:15','提早'],['08:30','正常']];
+const TEST_PERSONS=['彥宇','偉偉','佳學','77'];
+const BIZ_OWNERS=['沙課','武勇','定洲','vickey','joy','冠輝','三和','瑋平','忠謙'];
+const TV_PURPOSES=['簡報','開場','主視覺'];
+const BGM_SRC=['客戶電腦','中控電腦','廠商設備','串流平台','其他'];
+const STAGE_SCENES=['全亮','場景一','場景二','場景三','場景四','場景五','場景六','場景七','場景八','全暗'];
+const ROOM_SCENES= ['全亮','場景一','場景二','場景三','場景四','場景五','場景六','全暗'];
+const VENDOR_OPTS=[
+  {k:'none', cls:'v-none',  label:'無廠商'},
+  {k:'audio',cls:'v-audio', label:'有廠商・自帶音響'},
+  {k:'sys',  cls:'v-sys',   label:'有廠商・接系統'}
+];
+
+const LS='av_v8';
+let cur='1101';
+let st=lod();
+
+function lod(){try{const d=localStorage.getItem(LS);return d?JSON.parse(d):mk()}catch{return mk()}}
+function mk(){return{
+  '1101':{avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}},
+  '1001':{avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}},
+  '801': {avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}}
+}}
+function sav(){try{localStorage.setItem(LS,JSON.stringify(st))}catch{}}
+function today(){return new Date().toISOString().split('T')[0]}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+
+function S(){return st[cur]}
+function AD(){if(!S().avDraft)S().avDraft={};return S().avDraft}
+function LD(){if(!S().ltDraft)S().ltDraft={};return S().ltDraft}
+function avSc(){if(!S().avScenes)S().avScenes=[];return S().avScenes}
+function ltSc(){if(!S().ltScenes)S().ltScenes=[];return S().ltScenes}
+function dMx(pt){return(AD().pcMatrix||{})[pt]||[]}
+
+/* ── scene summaries ── */
+function avPtsLine(sc){
+  const pts=sc.pts||[];
+  if(!pts.length)return null;
+  return pts.map(pt=>{
+    const sel=((sc.pcMatrix||{})[pt]||[]).sort((a,b)=>a-b).map(n=>{
+      const m=RM[cur].mx.find(x=>x.n===n);
+      return`IN${n}${m&&!m.l.startsWith('IN')?'·'+m.l:''}`;
+    });
+    return`${pt} → ${sel.length?sel.join(', '):'─'}`;
+  }).join('　');
+}
+function avTvLine(sc){
+  return[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ')||null;
+}
+function ltLine(sc){
+  const parts=[];
+  if(sc.purpose)parts.push(`【${sc.purpose}】`);
+  if(RM[cur].hasStageLight&&sc.stageLight)parts.push(`舞台：${sc.stageLight}`);
+  if(sc.roomLight)parts.push(`場燈：${sc.roomLight}`);
+  return parts.join('　')||'─';
+}
+
+/* ── scene list HTML ── */
+function avSceneListHtml(){
+  const sc=avSc();if(!sc.length)return'';
+  return`<div class="scene-list">${sc.map((s,i)=>{
+    const l1=avPtsLine(s),l2=avTvLine(s);
+    return`<div class="scene-item">
+      <div class="scene-num">${i+1}</div>
+      <div class="scene-body">
+        ${l1?`<div class="scene-line1">${l1}</div>`:''}
+        ${l2?`<div class="scene-line2">📺 ${l2}</div>`:''}
+      </div>
+      <button class="scene-del" onclick="delAv(${i})">✕</button>
+    </div>`;
+  }).join('')}</div><div class="draft-sep"></div>`;
+}
+function ltSceneListHtml(){
+  const sc=ltSc();if(!sc.length)return'';
+  return`<div class="scene-list">${sc.map((s,i)=>`
+    <div class="scene-item">
+      <div class="scene-num lt-num">${i+1}</div>
+      <div class="scene-body"><div class="scene-line1">${ltLine(s)}</div></div>
+      <button class="scene-del" onclick="delLt(${i})">✕</button>
+    </div>`).join('')}</div><div class="draft-sep"></div>`;
+}
+
+/* ── draft AV matrix rows ── */
+function draftPtRows(){
+  const pts=(AD().pts||[]);
+  if(!pts.length)return`<div class="pt-empty">選擇接點後，指定矩陣輸入</div>`;
+  return`<div class="pt-mx-block">${pts.map(pt=>{
+    const sel=dMx(pt);
+    return`<div class="pt-mx-row">
+      <div class="pt-mx-hd">${pt}</div>
+      <div class="pt-mx-bd">
+        <div class="pt-mx-hint">8×8 矩陣輸入（可複選）</div>
+        <div class="mx-chips">${RM[cur].mx.map(({n,l})=>`
+          <div class="mx-chip${sel.includes(n)?' on':''}" data-pt="${pt}" data-n="${n}" onclick="toggleDMx(this)">
+            <span class="mn">IN${n}</span><span class="ml">${l}</span>
+          </div>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+function refreshPtRows(){
+  const el=document.getElementById('avpt-rows');if(el)el.innerHTML=draftPtRows();
+}
+
+/* ── light scene chips ── */
+function ltChips(key,options,draftKey){
+  const v=LD()[draftKey]||'';
+  return`<div class="lt-chips">${options.map(o=>`
+    <div class="lt-chip${v===o?' on':''}" data-k="${draftKey}" data-v="${o}" onclick="setLtChip(this)">${o}</div>`).join('')}</div>`;
+}
+
+/* ── vendor HTML ── */
+function vendorHtml(){
+  const v=S().vendor||'';
+  return`<div class="vendor-opts">${VENDOR_OPTS.map(o=>`
+    <div class="vendor-opt${v===o.k?' '+o.cls:''}" data-v="${o.k}" onclick="setVendor(this)">
+      <div class="vo-dot"></div>${o.label}
+    </div>`).join('')}</div>`;
+}
+
+/* ── render ── */
+function render(){
+  const s=S(),r=RM[cur],d=AD();
+  document.getElementById('form').innerHTML=`
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">📋</span><span class="card-lbl">活動基本資訊</span></div>
+    <div class="card-bd">
+      <div class="row2">
+        <div class="field"><label>活動名稱 / 客戶</label>
+          <input id="eventName" placeholder="客戶或活動名稱" value="${esc(s.eventName)}">
+        </div>
+        <div class="field"><label>活動日期</label>
+          <input type="date" id="eventDate" value="${s.eventDate||today()}">
+        </div>
+      </div>
+      <div class="field"><label>到場執勤時間</label>
+        <div class="aopts">
+          ${ARRIVE.map(([v,sub])=>`
+            <div class="aopt${s.arrive===v?' on':''}" onclick="setArrive('${v}',this)">
+              <span class="aopt-t">${v}</span><span class="aopt-s">${sub}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="field"><label>負責業務</label>
+        <div class="chips">
+          ${BIZ_OWNERS.map(p=>`
+            <div class="chip${(s.bizOwner||[]).includes(p)?' on':''}" data-g="bizOwner" data-v="${p}" onclick="toggleChip(this)">${p}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">🎬</span><span class="card-lbl">接點 / 電視牆場景</span></div>
+    <div class="card-bd">
+      ${avSceneListHtml()}
+      <div class="draft-wrap">
+        <div class="draft-lbl">新增場景</div>
+        <div class="field">
+          <label>接點位置</label>
+          <div class="chips">
+            ${[...r.pts,'其他'].map(p=>`
+              <div class="chip${(d.pts||[]).includes(p)?' on':''}" data-pt="${p}" onclick="toggleDPt(this)">${p}</div>`).join('')}
+          </div>
+        </div>
+        <div id="avpt-rows">${draftPtRows()}</div>
+        <div class="inner-div"></div>
+        <div class="field">
+          <label>電視牆模式</label>
+          <div class="tv-modes">
+            ${r.tvModes.map(m=>`
+              <div class="tv-chip${d.tvMode===m?' on':''}" data-v="${m}" onclick="setDTvMode(this)">${m}</div>`).join('')}
+          </div>
+        </div>
+        <div class="field">
+          <label>用途標注</label>
+          <div class="pu-chips">
+            ${TV_PURPOSES.map(p=>`
+              <div class="pu-chip${d.tvPurpose===p?' on':''}" data-v="${p}" onclick="setDPurpose(this)">${p}</div>`).join('')}
+          </div>
+          <div class="tv-custom"><span>自訂：</span>
+            <input id="tvCustom" placeholder="其他說明（選填）" value="${esc(d.tvCustom)}">
+          </div>
+        </div>
+        <button class="btn-add" onclick="addAv()"><span>＋</span>新增確認</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">🏭</span><span class="card-lbl">廠商</span></div>
+    <div class="card-bd">${vendorHtml()}</div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">🎚️</span><span class="card-lbl">混音機 / 音源</span></div>
+    <div class="card-bd">
+      <div class="field"><label>是否有 BGM 背景音樂</label>
+        ${togs('hasBGM','✅ 是，有 BGM','❌ 否')}
+      </div>
+      <div id="bgm-row" style="${s.hasBGM==='是'?'':'display:none'}">
+        <div class="field"><label>BGM 音源</label>
+          <div class="chips">
+            ${BGM_SRC.map(b=>`
+              <div class="chip${(s.bgmSrc||[]).includes(b)?' on':''}" data-g="bgmSrc" data-v="${b}" onclick="toggleChip(this)">${b}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>混音器備註</label>
+        <textarea id="mixerNote" placeholder="e.g. CH1 無線麥克風、CH3 客戶電腦音訊...">${esc(s.mixerNote)}</textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">💡</span><span class="card-lbl">燈光設定</span></div>
+    <div class="card-bd">
+      ${ltSceneListHtml()}
+      <div class="draft-wrap">
+        <div class="draft-lbl">新增燈光場景</div>
+        ${r.hasStageLight?`
+        <div class="field">
+          <label>舞台燈光</label>
+          ${ltChips('stage',STAGE_SCENES,'stageLight')}
+        </div>`:''}
+        <div class="field">
+          <label>場燈</label>
+          ${ltChips('room',ROOM_SCENES,'roomLight')}
+        </div>
+        <div class="field">
+          <label>用途標注</label>
+          <div class="pu-chips">
+            ${TV_PURPOSES.map(p=>`
+              <div class="pu-chip${(LD().ltPurpose||''===p)?LD().ltPurpose===p?' on':'':''}" data-k="ltPurpose" data-v="${p}" onclick="setLtChip(this)">${p}</div>`).join('')}
+          </div>
+        </div>
+        <button class="btn-add btn-add-lt" onclick="addLt()"><span>＋</span>新增確認</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">📝</span><span class="card-lbl">備註</span></div>
+    <div class="card-bd">
+      <div class="field">
+        <textarea id="notes" placeholder="e.g. 特殊接線、注意事項、其他說明...">${esc(s.notes)}</textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card test-card">
+    <div class="card-hd"><span class="card-ico">🧪</span><span class="card-lbl">測試資訊</span></div>
+    <div class="card-bd">
+      <div class="row2">
+        <div class="field"><label>測試日期</label>
+          <input type="date" id="testDate" value="${s.testDate||''}">
+        </div>
+      </div>
+      <div class="field"><label>測試人員</label>
+        <div class="chips">
+          ${TEST_PERSONS.map(p=>`
+            <div class="chip${(s.testPerson||[]).includes(p)?' on':''}" data-g="testPerson" data-v="${p}" onclick="toggleChip(this)">${p}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="btn-copy" onclick="copyLine()">📋 複製 LINE</button>
+      <button class="btn-copy btn-email" onclick="sendEmail()">📧 寄 Email</button>
+    </div>
+    <button class="btn-clr" onclick="clearForm()">清除此廳資料</button>
+  </div>`;
+}
+
+/* ── draft AV interactions ── */
+function toggleDPt(el){
+  const p=el.dataset.pt,d=AD();
+  if(!d.pts)d.pts=[];
+  if(el.classList.toggle('on')){if(!d.pts.includes(p))d.pts.push(p);}
+  else{d.pts=d.pts.filter(x=>x!==p);if(d.pcMatrix)delete d.pcMatrix[p];}
+  sav();refreshPtRows();
+}
+function toggleDMx(el){
+  const pt=el.dataset.pt,n=parseInt(el.dataset.n),d=AD();
+  if(!d.pcMatrix)d.pcMatrix={};
+  if(!d.pcMatrix[pt])d.pcMatrix[pt]=[];
+  const a=d.pcMatrix[pt],i=a.indexOf(n);
+  if(i>=0){a.splice(i,1);el.classList.remove('on');}else{a.push(n);el.classList.add('on');}
+  sav();
+}
+function setDTvMode(el){
+  const v=el.dataset.v,d=AD(),was=el.classList.contains('on');
+  document.querySelectorAll('.tv-chip').forEach(c=>c.classList.remove('on'));
+  d.tvMode=was?'':v;if(!was)el.classList.add('on');sav();
+}
+function setDPurpose(el){
+  const v=el.dataset.v,d=AD(),was=el.classList.contains('on');
+  document.querySelectorAll('.pu-chip').forEach(c=>c.classList.remove('on'));
+  d.tvPurpose=was?'':v;if(!was)el.classList.add('on');sav();
+}
+function addAv(){
+  saveFlds();const d=AD();
+  if(!(d.pts||[]).length&&!d.tvMode){showToast('請至少選擇接點或電視牆模式',true);return;}
+  avSc().push({pts:[...(d.pts||[])],pcMatrix:JSON.parse(JSON.stringify(d.pcMatrix||{})),
+    tvMode:d.tvMode||'',tvPurpose:d.tvPurpose||'',tvCustom:(d.tvCustom||'').trim()});
+  S().avDraft={};sav();render();
+}
+function delAv(i){avSc().splice(i,1);sav();render();}
+
+/* ── draft lighting ── */
+function setLtChip(el){
+  const k=el.dataset.k,v=el.dataset.v,was=el.classList.contains('on');
+  document.querySelectorAll(`.lt-chip[data-k="${k}"]`).forEach(c=>c.classList.remove('on'));
+  LD()[k]=was?'':v;if(!was)el.classList.add('on');sav();
+}
+function addLt(){
+  saveFlds();const ld=LD();
+  if(!ld.stageLight&&!ld.roomLight){showToast('請至少選擇一項燈光設定',true);return;}
+  ltSc().push({stageLight:ld.stageLight||'',roomLight:ld.roomLight||'',purpose:ld.ltPurpose||''});
+  S().ltDraft={};sav();render();
+}
+function delLt(i){ltSc().splice(i,1);sav();render();}
+
+/* ── general chips ── */
+function toggleChip(el){
+  const g=el.dataset.g,v=el.dataset.v;
+  if(!S()[g])S()[g]=[];
+  if(el.classList.toggle('on')){if(!S()[g].includes(v))S()[g].push(v);}
+  else{S()[g]=S()[g].filter(x=>x!==v);}
+  sav();
+}
+
+/* ── toggles ── */
+function togs(key,yL,nL){
+  const v=S()[key]||'';
+  const base='padding:9px;border:1px solid;border-radius:var(--rs);font-size:13px;font-weight:500;cursor:pointer;text-align:center;transition:all .15s;user-select:none;';
+  return`<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+    <div style="${base}background:${v==='是'?'var(--ok-bg)':'var(--sf2)'};border-color:${v==='是'?'var(--ok-bd)':'var(--bd2)'};color:${v==='是'?'var(--ok)':'var(--tx2)'}" data-k="${key}" data-v="是" onclick="doTog(this)">${yL}</div>
+    <div style="${base}background:${v==='否'?'var(--no-bg)':'var(--sf2)'};border-color:${v==='否'?'var(--no-bd)':'var(--bd2)'};color:${v==='否'?'var(--no)':'var(--tx2)'}" data-k="${key}" data-v="否" onclick="doTog(this)">${nL}</div>
+  </div>`;
+}
+function doTog(el){
+  const k=el.dataset.k,v=el.dataset.v;S()[k]=v;sav();
+  if(k==='hasBGM'){const r=document.getElementById('bgm-row');if(r)r.style.display=v==='是'?'':'none';}
+  else render();
+}
+
+function setVendor(el){
+  S().vendor=el.dataset.v;sav();
+  document.querySelectorAll('.vendor-opt').forEach(o=>{
+    const cfg=VENDOR_OPTS.find(x=>x.k===o.dataset.v);
+    o.className='vendor-opt'+(S().vendor===o.dataset.v?' '+cfg.cls:'');
+  });
+}
+function setArrive(val,el){
+  document.querySelectorAll('.aopt').forEach(a=>a.classList.remove('on'));
+  el.classList.add('on');S().arrive=val;sav();
+}
+function sw(room,el){
+  saveFlds();cur=room;
+  document.querySelectorAll('.rtab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');render();
+}
+function saveFlds(){
+  document.querySelectorAll('#form input[id],#form select[id],#form textarea[id]').forEach(el=>{
+    if(el.id==='tvCustom')AD().tvCustom=el.value;
+    else S()[el.id]=el.value;
+  });
+  sav();
+}
+
+/* ── shared content builder ── */
+function buildContent(){
+  saveFlds();const s=S();
+  const ts=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+  const bgmSrcs=s.bgmSrc||[];
+  const vendorLabel={none:'無廠商',audio:'有廠商・自帶音響',sys:'有廠商・接系統'}[s.vendor||'']||'─';
+
+  const rows=[
+`【${RM[cur].label} 中控交接清單】`,
+`━━━━━━━━━━━━━━━━━`,
+`📋 活動：${gv('eventName')}`,
+`📅 日期：${gv('eventDate')}`,
+`⏰ 到場時間：${s.arrive||'─'}`,
+`👔 負責業務：${(s.bizOwner||[]).join('、')||'─'}`,
+``,`🎬 接點 / 電視牆場景`,
+  ];
+  const asc=avSc();
+  if(asc.length){
+    asc.forEach((sc,i)=>{
+      rows.push(`  ┌ 場景${i+1}`);
+      (sc.pts||[]).forEach(pt=>{
+        const sel=((sc.pcMatrix||{})[pt]||[]).sort((a,b)=>a-b).map(n=>{
+          const m=RM[cur].mx.find(x=>x.n===n);return`IN${n}${m&&!m.l.startsWith('IN')?'·'+m.l:''}`;
+        });
+        rows.push(`  │ ${pt} → ${sel.length?sel.join(', '):'─'}`);
+      });
+      const tv=[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ');
+      if(tv)rows.push(`  │ 📺 ${tv}`);
+      rows.push(`  └${'─'.repeat(14)}`);
+    });
+  }else rows.push('  尚未設定場景');
+
+  rows.push(``,`🏭 廠商：${vendorLabel}`);
+  rows.push(``,`🎚️ 混音機 / 音源`);
+  rows.push(`└ BGM：${s.hasBGM||'─'}${s.hasBGM==='是'&&bgmSrcs.length?' ('+bgmSrcs.join('、')+')':''}`);
+  if((s.mixerNote||'').trim())rows.push(`└ 混音備註：${s.mixerNote.trim()}`);
+
+  rows.push(``,`💡 燈光設定`);
+  const lsc=ltSc();
+  if(lsc.length){
+    lsc.forEach((sc,i)=>{
+      rows.push(`  ┌ 燈光${i+1}${sc.purpose?' 【'+sc.purpose+'】':''}`);
+      if(RM[cur].hasStageLight&&sc.stageLight)rows.push(`  │ 舞台：${sc.stageLight}`);
+      if(sc.roomLight)rows.push(`  │ 場燈：${sc.roomLight}`);
+      rows.push(`  └${'─'.repeat(14)}`);
+    });
+  }else rows.push('  尚未設定燈光場景');
+
+  if((s.notes||'').trim())rows.push(``,`📝 備註：${s.notes.trim()}`);
+  rows.push(``,`🧪 測試資訊`);
+  rows.push(`└ 測試日期：${gv('testDate')}`);
+  rows.push(`└ 測試人員：${(s.testPerson||[]).join('、')||'─'}`);
+  rows.push(`⏱ 填表：${ts}`);
+  rows.push(`━━━━━━━━━━━━━━━━━`);
+  return rows.join('\n');
+}
+
+/* ── LINE copy ── */
+function gv(id){return(S()[id]||'').trim()||'─'}
+function copyLine(){
+  const txt=buildContent();
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('✅ 已複製！直接貼到 LINE')};
+  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(txt).then(()=>showToast('✅ 已複製！直接貼到 LINE')).catch(fb)}else fb();
+}
+function sendEmail(){
+  saveFlds();const s=S();
+  const subject=`【${RM[cur].label} 中控交接清單】${gv('eventDate')} ${gv('eventName')}`;
+  const body=buildContent();
+  // copy body to clipboard
+  const doCopy=()=>{
+    const ta=document.createElement('textarea');ta.value=body;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+  };
+  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(body).catch(doCopy);}else doCopy();
+  // open email client
+  const mailto=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailto,'_blank');
+  showToast('📧 已開啟郵件，內容也已複製');
+}
+
+function showToast(msg,err){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(err?' err':'')+' show';
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+function clearForm(){
+  if(!confirm(`清除 ${RM[cur].label} 所有資料？`))return;
+  st[cur]={avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}};sav();render();
+}
+document.addEventListener('input',e=>{
+  if(!e.target.id)return;
+  if(e.target.id==='tvCustom')AD().tvCustom=e.target.value;
+  else S()[e.target.id]=e.target.value;
+  sav();
+});
+render();
+</script>
+</body>
+</html>
