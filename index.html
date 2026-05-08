@@ -670,64 +670,66 @@ function buildContent(){
   const ts=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
   const vendorLabel={none:'無廠商',audio:'有廠商・自帶音響',sys:'有廠商・接系統'}[s.vendor||'']||'─';
   const sep='━━━━━━━';
-  const subSep='──────';
+  const ind='　';
 
   const rows=[
 `【${RM[cur].label} 中控交接清單】`,
 sep,
-`📋 活動：${gv('eventName')}`,
-`📅 日期：${gv('eventDate')}`,
-`⏰ 到場時間：${s.arrive||'─'}`,
-`👔 負責業務：${(s.bizOwner||[]).join('、')||'─'}`,
+`📋 基本資訊`,
+`${ind}活動：${gv('eventName')}`,
+`${ind}日期：${gv('eventDate')}`,
+`${ind}到場：${s.arrive||'─'}`,
+`${ind}業務：${(s.bizOwner||[]).join('、')||'─'}`,
 ``,`🎬 接點 / 電視牆場景`,
   ];
   const asc=avSc();
   if(asc.length){
     asc.forEach((sc,i)=>{
-      rows.push(`  ┌ 場景${i+1}`);
+      rows.push(`${ind}場景 ${i+1}`);
       (sc.pts||[]).forEach(pt=>{
         const sel=((sc.pcMatrix||{})[pt]||[]).sort((a,b)=>a-b).map(n=>{
           const m=RM[cur].mx.find(x=>x.n===n);return`IN${n}${m&&!m.l.startsWith('IN')?'·'+m.l:''}`;
         });
-        rows.push(`  │ ${pt} → ${sel.length?sel.join(', '):'─'}`);
+        rows.push(`${ind}接點：${pt}`);
+        rows.push(`${ind}輸入：${sel.length?sel.join('、'):'─'}`);
       });
       const tv=[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ');
-      if(tv)rows.push(`  │ 📺 ${tv}`);
-      if((sc.groups||[]).length)rows.push(`  │ 套用：${sc.groups.join('、')}`);
-      rows.push(`  └${subSep}`);
+      if(tv)rows.push(`${ind}電視牆：${tv}`);
+      if((sc.groups||[]).length)rows.push(`${ind}套用：${sc.groups.join('、')}`);
     });
-  }else rows.push('  尚未設定場景');
+  }else rows.push(`${ind}尚未設定場景`);
 
-  rows.push(``,`🏭 廠商：${vendorLabel}`);
+  rows.push(``,`🏭 廠商`);
+  rows.push(`${ind}${vendorLabel}`);
   rows.push(``,`🎚️ 混音機`);
-  if((s.mixerNote||'').trim())rows.push(`└ 混音備註：${s.mixerNote.trim()}`);
-  else rows.push('└ 無備註');
+  if((s.mixerNote||'').trim())rows.push(`${ind}備註：${s.mixerNote.trim()}`);
+  else rows.push(`${ind}無備註`);
 
   rows.push(``,`💡 燈光設定`);
   const lsc=ltSc();
   if(lsc.length){
     lsc.forEach((sc,i)=>{
-      rows.push(`  ┌ 燈光${i+1}${sc.purpose?' 【'+sc.purpose+'】':''}`);
-      if(RM[cur].hasStageLight&&sc.stageLight)rows.push(`  │ 舞台：${sc.stageLight}`);
-      if(sc.roomLight)rows.push(`  │ 場燈：${sc.roomLight}`);
-      rows.push(`  └${subSep}`);
+      rows.push(`${ind}燈光 ${i+1}${sc.purpose?'【'+sc.purpose+'】':''}`);
+      if(RM[cur].hasStageLight&&sc.stageLight)rows.push(`${ind}舞台：${sc.stageLight}`);
+      if(sc.roomLight)rows.push(`${ind}場燈：${sc.roomLight}`);
     });
-  }else rows.push('  尚未設定燈光場景');
+  }else rows.push(`${ind}尚未設定燈光場景`);
 
   const relayRooms=[...(s.relayRooms||[])];
   if(s.relayCustom1On&&(s.relayCustom1||'').trim())relayRooms.push(s.relayCustom1.trim());
   if(s.relayCustom2On&&(s.relayCustom2||'').trim())relayRooms.push(s.relayCustom2.trim());
   if(s.relayIn||s.relayOut||relayRooms.length){
     rows.push(``,`🔁 串場需求`);
-    rows.push(`└ HDMI：${relayInText(s.relayIn)} → ${relayOutText(s.relayOut)}`);
-    rows.push(`└ 會議室：${relayRooms.join('、')||'─'}`);
+    rows.push(`${ind}輸入：${relayInText(s.relayIn)}`);
+    rows.push(`${ind}輸出：${relayOutText(s.relayOut)}`);
+    rows.push(`${ind}會議室：${relayRooms.join('、')||'─'}`);
   }
 
-  if((s.notes||'').trim())rows.push(``,`📝 備註：${s.notes.trim()}`);
+  if((s.notes||'').trim())rows.push(``,`📝 備註`,`${ind}${s.notes.trim()}`);
   rows.push(``,`🧪 測試資訊`);
-  rows.push(`└ 測試日期：${gv('testDate')}`);
-  rows.push(`└ 測試人員：${(s.testPerson||[]).join('、')||'─'}`);
-  rows.push(`⏱ 填表：${ts}`);
+  rows.push(`${ind}日期：${gv('testDate')}`);
+  rows.push(`${ind}人員：${(s.testPerson||[]).join('、')||'─'}`);
+  rows.push(`${ind}填表：${ts}`);
   rows.push(sep);
   return rows.join('\n');
 }
