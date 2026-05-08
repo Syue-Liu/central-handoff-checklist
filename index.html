@@ -91,6 +91,9 @@ body{background:var(--bg);color:var(--tx);font-family:-apple-system,'Helvetica N
 .tv-modes{display:flex;flex-wrap:wrap;gap:6px}
 .tv-chip{padding:7px 12px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:500;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
 .tv-chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}
+.group-chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.group-chip{padding:8px 4px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:600;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none;text-align:center}
+.group-chip.on{background:var(--pu-bg);border-color:var(--pu-bd);color:var(--pu)}
 .pu-chips{display:flex;flex-wrap:wrap;gap:6px}
 .pu-chip{padding:5px 12px;border:1px solid var(--bd2);border-radius:20px;font-size:12px;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
 .pu-chip.on{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);font-weight:500}
@@ -179,6 +182,7 @@ const ARRIVE=[['07:30','提早'],['08:15','提早'],['08:30','正常']];
 const TEST_PERSONS=['彥宇','偉偉','佳學','77'];
 const BIZ_OWNERS=['沙課','武勇','定洲','vickey','joy','冠輝','三和','瑋平','忠謙'];
 const TV_PURPOSES=['簡報','開場','主視覺'];
+const TV_GROUPS=[1,2,3,4,5,6].map(n=>`群組${n}`);
 const BGM_SRC=['客戶電腦','中控電腦','廠商設備','串流平台','其他'];
 const STAGE_SCENES=['全亮','場景一','場景二','場景三','場景四','場景五','場景六','場景七','場景八','全暗'];
 const ROOM_SCENES= ['全亮','場景一','場景二','場景三','場景四','場景五','場景六','全暗'];
@@ -224,6 +228,10 @@ function avPtsLine(sc){
 function avTvLine(sc){
   return[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ')||null;
 }
+function avGroupLine(sc){
+  const groups=sc.groups||[];
+  return groups.length?`套用：${groups.join('、')}`:null;
+}
 function ltLine(sc){
   const parts=[];
   if(sc.purpose)parts.push(`【${sc.purpose}】`);
@@ -236,12 +244,13 @@ function ltLine(sc){
 function avSceneListHtml(){
   const sc=avSc();if(!sc.length)return'';
   return`<div class="scene-list">${sc.map((s,i)=>{
-    const l1=avPtsLine(s),l2=avTvLine(s);
+    const l1=avPtsLine(s),l2=avTvLine(s),l3=avGroupLine(s);
     return`<div class="scene-item">
       <div class="scene-num">${i+1}</div>
       <div class="scene-body">
         ${l1?`<div class="scene-line1">${l1}</div>`:''}
         ${l2?`<div class="scene-line2">📺 ${l2}</div>`:''}
+        ${l3?`<div class="scene-line2">${l3}</div>`:''}
       </div>
       <button class="scene-del" onclick="delAv(${i})">✕</button>
     </div>`;
@@ -351,6 +360,13 @@ function render(){
           </div>
         </div>
         <div class="field">
+          <label>套用在群組</label>
+          <div class="group-chips">
+            ${TV_GROUPS.map(g=>`
+              <div class="group-chip${(d.groups||[]).includes(g)?' on':''}" data-v="${g}" onclick="toggleDGroup(this)">${g.replace('群組','')}</div>`).join('')}
+          </div>
+        </div>
+        <div class="field">
           <label>用途標注</label>
           <div class="pu-chips">
             ${TV_PURPOSES.map(p=>`
@@ -431,7 +447,7 @@ function render(){
     <div class="card-bd">
       <div class="row2">
         <div class="field"><label>測試日期</label>
-          <input type="date" id="testDate" value="${s.testDate||''}">
+          <input type="date" id="testDate" value="${s.testDate||today()}">
         </div>
       </div>
       <div class="field"><label>測試人員</label>
@@ -478,11 +494,18 @@ function setDPurpose(el){
   document.querySelectorAll('.pu-chip').forEach(c=>c.classList.remove('on'));
   d.tvPurpose=was?'':v;if(!was)el.classList.add('on');sav();
 }
+function toggleDGroup(el){
+  const v=el.dataset.v,d=AD();
+  if(!d.groups)d.groups=[];
+  if(el.classList.toggle('on')){if(!d.groups.includes(v))d.groups.push(v);}
+  else{d.groups=d.groups.filter(x=>x!==v);}
+  sav();
+}
 function addAv(){
   saveFlds();const d=AD();
   if(!(d.pts||[]).length&&!d.tvMode){showToast('請至少選擇接點或電視牆模式',true);return;}
   avSc().push({pts:[...(d.pts||[])],pcMatrix:JSON.parse(JSON.stringify(d.pcMatrix||{})),
-    tvMode:d.tvMode||'',tvPurpose:d.tvPurpose||'',tvCustom:(d.tvCustom||'').trim()});
+    tvMode:d.tvMode||'',groups:[...(d.groups||[])],tvPurpose:d.tvPurpose||'',tvCustom:(d.tvCustom||'').trim()});
   S().avDraft={};sav();render();
 }
 function delAv(i){avSc().splice(i,1);sav();render();}
@@ -577,6 +600,7 @@ function buildContent(){
       });
       const tv=[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ');
       if(tv)rows.push(`  │ 📺 ${tv}`);
+      if((sc.groups||[]).length)rows.push(`  │ 套用：${sc.groups.join('、')}`);
       rows.push(`  └${'─'.repeat(14)}`);
     });
   }else rows.push('  尚未設定場景');
