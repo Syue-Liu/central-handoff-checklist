@@ -578,10 +578,12 @@ function buildContent(){
   const ts=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
   const bgmSrcs=s.bgmSrc||[];
   const vendorLabel={none:'無廠商',audio:'有廠商・自帶音響',sys:'有廠商・接系統'}[s.vendor||'']||'─';
+  const sep='━━━━━━━';
+  const subSep='──────';
 
   const rows=[
 `【${RM[cur].label} 中控交接清單】`,
-`━━━━━━━━━━━━━━━━━`,
+sep,
 `📋 活動：${gv('eventName')}`,
 `📅 日期：${gv('eventDate')}`,
 `⏰ 到場時間：${s.arrive||'─'}`,
@@ -601,7 +603,7 @@ function buildContent(){
       const tv=[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ');
       if(tv)rows.push(`  │ 📺 ${tv}`);
       if((sc.groups||[]).length)rows.push(`  │ 套用：${sc.groups.join('、')}`);
-      rows.push(`  └${'─'.repeat(14)}`);
+      rows.push(`  └${subSep}`);
     });
   }else rows.push('  尚未設定場景');
 
@@ -617,7 +619,7 @@ function buildContent(){
       rows.push(`  ┌ 燈光${i+1}${sc.purpose?' 【'+sc.purpose+'】':''}`);
       if(RM[cur].hasStageLight&&sc.stageLight)rows.push(`  │ 舞台：${sc.stageLight}`);
       if(sc.roomLight)rows.push(`  │ 場燈：${sc.roomLight}`);
-      rows.push(`  └${'─'.repeat(14)}`);
+      rows.push(`  └${subSep}`);
     });
   }else rows.push('  尚未設定燈光場景');
 
@@ -626,7 +628,7 @@ function buildContent(){
   rows.push(`└ 測試日期：${gv('testDate')}`);
   rows.push(`└ 測試人員：${(s.testPerson||[]).join('、')||'─'}`);
   rows.push(`⏱ 填表：${ts}`);
-  rows.push(`━━━━━━━━━━━━━━━━━`);
+  rows.push(sep);
   return rows.join('\n');
 }
 
