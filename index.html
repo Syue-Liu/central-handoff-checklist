@@ -241,8 +241,11 @@ const VENDOR_OPTS=[
 ];
 
 const LS='av_v8';
+const COLLAPSE_DEFAULTS={vendor:true,lights:true,relay:true,notes:true,test:false};
+const COLLAPSE_PRESET='test-open-v1';
 let cur='1101';
 let st=lod();
+applyCollapseDefaults();
 
 function lod(){try{const d=localStorage.getItem(LS);return d?JSON.parse(d):mk()}catch{return mk()}}
 function mk(){return{
@@ -250,6 +253,16 @@ function mk(){return{
   '1001':{avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}},
   '801': {avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}}
 }}
+function applyCollapseDefaults(){
+  ['1101','1001','801'].forEach(room=>{
+    if(!st[room])st[room]={avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}};
+    if(st[room].collapsePreset!==COLLAPSE_PRESET){
+      st[room].collapsed={...COLLAPSE_DEFAULTS};
+      st[room].collapsePreset=COLLAPSE_PRESET;
+    }
+  });
+  sav();
+}
 function sav(){try{localStorage.setItem(LS,JSON.stringify(st))}catch{}}
 function today(){return new Date().toISOString().split('T')[0]}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
@@ -352,7 +365,10 @@ function vendorHtml(){
     </div>`).join('')}</div>`;
 }
 
-function isCollapsed(key){return !!((S().collapsed||{})[key])}
+function isCollapsed(key){
+  const c=S().collapsed||{};
+  return Object.prototype.hasOwnProperty.call(c,key)?!!c[key]:!!COLLAPSE_DEFAULTS[key];
+}
 function cardHtml(key,icon,label,body,cls=''){
   const closed=isCollapsed(key);
   return`<div class="card ${cls}${closed?' is-collapsed':''}">
@@ -769,7 +785,7 @@ function showToast(msg,err){
 }
 function clearForm(){
   if(!confirm(`清除 ${RM[cur].label} 所有資料？`))return;
-  st[cur]={avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}};sav();render();
+  st[cur]={avScenes:[],avDraft:{},ltScenes:[],ltDraft:{},collapsed:{...COLLAPSE_DEFAULTS},collapsePreset:COLLAPSE_PRESET};sav();render();
 }
 document.addEventListener('input',e=>{
   if(!e.target.id)return;
