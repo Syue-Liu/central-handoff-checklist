@@ -98,6 +98,8 @@ body{min-height:100vh;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 260
 .group-chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .group-chip{padding:9px 4px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:750;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none;text-align:center}
 .group-chip.on{background:var(--pu-bg);border-color:var(--pu-bd);color:var(--pu);box-shadow:0 0 0 3px rgba(104,65,163,.08)}
+.relay-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.relay-room-grid{display:flex;flex-wrap:wrap;gap:7px}
 .pu-chips{display:flex;flex-wrap:wrap;gap:6px}
 .pu-chip{padding:7px 12px;border:1px solid var(--bd2);border-radius:999px;font-size:12px;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none}
 .pu-chip.on{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);font-weight:650}
@@ -156,7 +158,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 260
 
 @media(max-width:380px){
   .row2{grid-template-columns:1fr}
-  .group-chips{grid-template-columns:repeat(3,1fr)}
+  .group-chips,.relay-grid{grid-template-columns:repeat(3,1fr)}
 }
 
 @media(prefers-color-scheme:dark){
@@ -210,7 +212,13 @@ const TEST_PERSONS=['彥宇','偉偉','佳學','77'];
 const BIZ_OWNERS=['沙課','武勇','定洲','vickey','joy','冠輝','三和','瑋平','忠謙'];
 const TV_PURPOSES=['簡報','開場','主視覺'];
 const TV_GROUPS=[1,2,3,4,5,6].map(n=>`群組${n}`);
-const BGM_SRC=['客戶電腦','中控電腦','廠商設備','串流平台','其他'];
+const RELAY_INPUTS=[1,2,3,4,5];
+const RELAY_OUTPUTS=[11,12,13,14,15,16];
+const RELAY_ROOMS={
+  '1101':['1102','1103','1110a','1110b','1110c','1110d'],
+  '1001':['1002','1003','1005','1006','1007'],
+  '801':['802','803','810b']
+};
 const STAGE_SCENES=['全亮','場景一','場景二','場景三','場景四','場景五','場景六','場景七','場景八','全暗'];
 const ROOM_SCENES= ['全亮','場景一','場景二','場景三','場景四','場景五','場景六','全暗'];
 const VENDOR_OPTS=[
@@ -414,21 +422,47 @@ function render(){
   </div>
 
   <div class="card">
-    <div class="card-hd"><span class="card-ico">🎚️</span><span class="card-lbl">混音機 / 音源</span></div>
+    <div class="card-hd"><span class="card-ico">🎚️</span><span class="card-lbl">混音機</span></div>
     <div class="card-bd">
-      <div class="field"><label>是否有 BGM 背景音樂</label>
-        ${togs('hasBGM','✅ 是，有 BGM','❌ 否')}
+      <div class="field"><label>混音器備註</label>
+        <textarea id="mixerNote" placeholder="e.g. CH1 無線麥克風、CH3 客戶電腦音訊...">${esc(s.mixerNote)}</textarea>
       </div>
-      <div id="bgm-row" style="${s.hasBGM==='是'?'':'display:none'}">
-        <div class="field"><label>BGM 音源</label>
-          <div class="chips">
-            ${BGM_SRC.map(b=>`
-              <div class="chip${(s.bgmSrc||[]).includes(b)?' on':''}" data-g="bgmSrc" data-v="${b}" onclick="toggleChip(this)">${b}</div>`).join('')}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">🔁</span><span class="card-lbl">串場需求</span></div>
+    <div class="card-bd">
+      <div class="row2">
+        <div class="field">
+          <label>HDMI 輸入訊號</label>
+          <div class="relay-grid">
+            ${RELAY_INPUTS.map(n=>`
+              <div class="group-chip single-chip${s.relayIn==n?' on':''}" data-k="relayIn" data-v="${n}" onclick="setSingle(this)">IN ${n}</div>`).join('')}
+          </div>
+        </div>
+        <div class="field">
+          <label>HDMI 輸出訊號</label>
+          <div class="relay-grid">
+            ${RELAY_OUTPUTS.map(n=>`
+              <div class="group-chip single-chip${s.relayOut==n?' on':''}" data-k="relayOut" data-v="${n}" onclick="setSingle(this)">OUT ${n}</div>`).join('')}
           </div>
         </div>
       </div>
-      <div class="field"><label>混音器備註</label>
-        <textarea id="mixerNote" placeholder="e.g. CH1 無線麥克風、CH3 客戶電腦音訊...">${esc(s.mixerNote)}</textarea>
+      <div class="field">
+        <label>串到會議室</label>
+        <div class="relay-room-grid">
+          ${(RELAY_ROOMS[cur]||[]).map(room=>`
+            <div class="chip${(s.relayRooms||[]).includes(room)?' on':''}" data-g="relayRooms" data-v="${room}" onclick="toggleChip(this)">${room}</div>`).join('')}
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>自訂會議室 1</label>
+          <input id="relayCustom1" placeholder="其他會議室" value="${esc(s.relayCustom1)}">
+        </div>
+        <div class="field"><label>自訂會議室 2</label>
+          <input id="relayCustom2" placeholder="其他會議室" value="${esc(s.relayCustom2)}">
+        </div>
       </div>
     </div>
   </div>
@@ -559,6 +593,11 @@ function toggleChip(el){
   else{S()[g]=S()[g].filter(x=>x!==v);}
   sav();
 }
+function setSingle(el){
+  const k=el.dataset.k,v=el.dataset.v,was=el.classList.contains('on');
+  document.querySelectorAll(`.single-chip[data-k="${k}"]`).forEach(c=>c.classList.remove('on'));
+  S()[k]=was?'':v;if(!was)el.classList.add('on');sav();
+}
 
 /* ── toggles ── */
 function togs(key,yL,nL){
@@ -603,7 +642,6 @@ function saveFlds(){
 function buildContent(){
   saveFlds();const s=S();
   const ts=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
-  const bgmSrcs=s.bgmSrc||[];
   const vendorLabel={none:'無廠商',audio:'有廠商・自帶音響',sys:'有廠商・接系統'}[s.vendor||'']||'─';
   const sep='━━━━━━━';
   const subSep='──────';
@@ -635,9 +673,17 @@ sep,
   }else rows.push('  尚未設定場景');
 
   rows.push(``,`🏭 廠商：${vendorLabel}`);
-  rows.push(``,`🎚️ 混音機 / 音源`);
-  rows.push(`└ BGM：${s.hasBGM||'─'}${s.hasBGM==='是'&&bgmSrcs.length?' ('+bgmSrcs.join('、')+')':''}`);
+  rows.push(``,`🎚️ 混音機`);
   if((s.mixerNote||'').trim())rows.push(`└ 混音備註：${s.mixerNote.trim()}`);
+  else rows.push('└ 無備註');
+
+  const relayRooms=[...(s.relayRooms||[])];
+  [s.relayCustom1,s.relayCustom2].forEach(v=>{if((v||'').trim())relayRooms.push(v.trim())});
+  if(s.relayIn||s.relayOut||relayRooms.length){
+    rows.push(``,`🔁 串場需求`);
+    rows.push(`└ HDMI：${s.relayIn?'IN'+s.relayIn:'─'} → ${s.relayOut?'OUT'+s.relayOut:'─'}`);
+    rows.push(`└ 會議室：${relayRooms.join('、')||'─'}`);
+  }
 
   rows.push(``,`💡 燈光設定`);
   const lsc=ltSc();
