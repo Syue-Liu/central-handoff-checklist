@@ -45,8 +45,12 @@ body{min-height:100vh;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 260
 
 .card{background:var(--sf);border:1px solid rgba(201,210,221,.82);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
 .card-hd{padding:12px 15px;border-bottom:1px solid var(--bd);background:linear-gradient(180deg,#fbfcfe 0%,var(--sf2) 100%);display:flex;align-items:center;gap:9px}
+.card-toggle{cursor:pointer;user-select:none}
+.card.is-collapsed .card-hd{border-bottom:none}
 .card-ico{width:24px;height:24px;border-radius:7px;background:#eef3f8;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;box-shadow:0 1px 0 rgba(255,255,255,.9) inset}
-.card-lbl{font-size:12px;font-weight:750;color:var(--ink2);letter-spacing:.04em;text-transform:uppercase}
+.card-lbl{font-size:12px;font-weight:750;color:var(--ink2);letter-spacing:.04em;text-transform:uppercase;flex:1}
+.card-caret{margin-left:auto;color:var(--tx3);font-size:13px;font-weight:800;transition:transform .15s}
+.card.is-collapsed .card-caret{transform:rotate(-90deg)}
 .card-bd{padding:16px;display:flex;flex-direction:column;gap:14px}
 .inner-div{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);margin:2px 0}
 
@@ -348,15 +352,24 @@ function vendorHtml(){
     </div>`).join('')}</div>`;
 }
 
+function isCollapsed(key){return !!((S().collapsed||{})[key])}
+function cardHtml(key,icon,label,body,cls=''){
+  const closed=isCollapsed(key);
+  return`<div class="card ${cls}${closed?' is-collapsed':''}">
+    <div class="card-hd card-toggle" onclick="toggleCollapse('${key}')">
+      <span class="card-ico">${icon}</span><span class="card-lbl">${label}</span><span class="card-caret">⌄</span>
+    </div>
+    ${closed?'':`<div class="card-bd">${body}</div>`}
+  </div>`;
+}
+
 function relayInText(v){
   const item=RELAY_INPUTS.find(x=>String(x.n)===String(v));
   return item?`IN${item.n}（${item.src}）`:'─';
 }
 function relayOutText(v){return v?`OUT${v}`:'─'}
 function relayHtml(s){
-  return`<div class="card">
-    <div class="card-hd"><span class="card-ico">🔁</span><span class="card-lbl">串場需求</span></div>
-    <div class="card-bd">
+  return cardHtml('relay','🔁','串場需求',`
       <div class="row2">
         <div class="field">
           <label>HDMI 輸入訊號</label>
@@ -396,8 +409,7 @@ function relayHtml(s){
           </div>
         </div>
       </div>
-    </div>
-  </div>`;
+    `);
 }
 
 /* ── render ── */
@@ -478,11 +490,6 @@ function render(){
   </div>
 
   <div class="card">
-    <div class="card-hd"><span class="card-ico">🏭</span><span class="card-lbl">廠商</span></div>
-    <div class="card-bd">${vendorHtml()}</div>
-  </div>
-
-  <div class="card">
     <div class="card-hd"><span class="card-ico">🎚️</span><span class="card-lbl">混音機</span></div>
     <div class="card-bd">
       <div class="field"><label>混音器備註</label>
@@ -491,9 +498,9 @@ function render(){
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-hd"><span class="card-ico">💡</span><span class="card-lbl">燈光設定</span></div>
-    <div class="card-bd">
+  ${cardHtml('vendor','🏭','廠商',vendorHtml())}
+
+  ${cardHtml('lights','💡','燈光設定',`
       ${ltSceneListHtml()}
       <div class="draft-wrap">
         <div class="draft-lbl">新增燈光場景</div>
@@ -515,23 +522,17 @@ function render(){
         </div>
         <button class="btn-add btn-add-lt" onclick="addLt()"><span>＋</span>新增確認</button>
       </div>
-    </div>
-  </div>
+    `)}
 
   ${relayHtml(s)}
 
-  <div class="card">
-    <div class="card-hd"><span class="card-ico">📝</span><span class="card-lbl">備註</span></div>
-    <div class="card-bd">
+  ${cardHtml('notes','📝','備註',`
       <div class="field">
         <textarea id="notes" placeholder="e.g. 特殊接線、注意事項、其他說明...">${esc(s.notes)}</textarea>
       </div>
-    </div>
-  </div>
+    `)}
 
-  <div class="card test-card">
-    <div class="card-hd"><span class="card-ico">🧪</span><span class="card-lbl">測試資訊</span></div>
-    <div class="card-bd">
+  ${cardHtml('test','🧪','測試資訊',`
       <div class="row2">
         <div class="field"><label>測試日期</label>
           <input type="date" id="testDate" value="${s.testDate||today()}">
@@ -543,8 +544,7 @@ function render(){
             <div class="chip${(s.testPerson||[]).includes(p)?' on':''}" data-g="testPerson" data-v="${p}" onclick="toggleChip(this)">${p}</div>`).join('')}
         </div>
       </div>
-    </div>
-  </div>
+    `,'test-card')}
 
   <div class="actions">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -618,6 +618,12 @@ function toggleChip(el){
   if(el.classList.toggle('on')){if(!S()[g].includes(v))S()[g].push(v);}
   else{S()[g]=S()[g].filter(x=>x!==v);}
   sav();
+}
+function toggleCollapse(key){
+  saveFlds();
+  if(!S().collapsed)S().collapsed={};
+  S().collapsed[key]=!S().collapsed[key];
+  sav();render();
 }
 function setSingle(el){
   const k=el.dataset.k,v=el.dataset.v,was=el.classList.contains('on');
