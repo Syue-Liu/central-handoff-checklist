@@ -197,22 +197,64 @@ body{min-height:100vh;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 260
 .toast.err{background:#b03020}
 
 @media(max-width:520px){
-  .hdr{padding:15px 16px 13px}
-  .rnav{top:73px;padding:9px 12px}
-  .main{padding:14px 12px 36px;gap:12px}
-  .card-bd{padding:14px}
-  .mx-chips{grid-template-columns:repeat(2,1fr)}
+  body{font-size:14px;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 180px,#e8edf2 100%)}
+  .hdr{padding:10px 14px 9px}
+  .hdr-title{font-size:16px;gap:8px}
+  .hdr-sub{font-size:11px;margin-top:2px}
+  .dot{width:7px;height:7px}
+  .rnav{top:55px;padding:8px 10px;gap:6px}
+  .rtab{min-width:0;padding:8px 6px;font-size:13px}
+  .main{padding:10px 10px 32px;gap:10px}
+  .card{box-shadow:0 6px 18px rgba(23,34,52,.07)}
+  .card-hd{padding:10px 12px;gap:8px}
+  .card-ico{width:22px;height:22px;font-size:13px}
+  .card-lbl{font-size:12px}
+  .card-bd{padding:12px;gap:12px}
+  .row2{grid-template-columns:1fr}
+  .field input,.field select,.field textarea{font-size:15px;padding:10px 11px}
+  .field textarea{min-height:82px}
+  .aopts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .aopt{padding:9px 3px}
+  .chip,.tv-chip,.lt-chip,.pu-chip,.group-chip,.wf-chip{min-height:38px;display:flex;align-items:center;justify-content:center}
+  .chips,.tv-modes,.lt-chips,.pu-chips{gap:6px}
+  .tv-modes{display:grid;grid-template-columns:repeat(2,1fr)}
+  .tv-chip{text-align:center;padding:9px 6px}
+  .pu-chips{display:grid;grid-template-columns:repeat(3,1fr)}
+  .pu-chip{text-align:center;padding:8px 6px}
+  .group-chips{grid-template-columns:repeat(3,1fr)}
+  .wf-step{padding:11px;gap:8px}
+  .wf-hd{align-items:flex-start}
+  .wf-title{font-size:12px;line-height:1.35}
+  .wf-val{font-size:12px;line-height:1.35;text-align:right;max-width:54%}
+  .wf-chips{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+  .wf-chip{padding:8px 5px;line-height:1.25;min-width:0}
+  .wf-chip .wc-l{font-size:10px}
+  .btn-wf-confirm,.btn-add,.btn-copy{min-height:44px}
+  .pending-line{align-items:flex-start;gap:5px;padding:9px;line-height:1.45}
+  .pending-line .pl-out{width:100%;padding-left:22px}
+  .scene-item{padding:10px;gap:8px}
+  .scene-body{min-width:0}
+  .scene-badges{gap:4px}
+  .badge{font-size:11px;line-height:1.25}
+  .scene-sig{font-size:12px;line-height:1.55}
+  .relay-grid{grid-template-columns:repeat(2,1fr)}
+  .relay-custom{grid-template-columns:1fr 68px}
+  .actions{gap:7px}
+  .btn-copy{font-size:14px;padding:12px 8px}
 }
 
 @media(max-width:380px){
   .row2{grid-template-columns:1fr}
-  .group-chips,.relay-grid{grid-template-columns:repeat(3,1fr)}
+  .group-chips{grid-template-columns:repeat(3,1fr)}
+  .relay-grid,.wf-chips,.tv-modes{grid-template-columns:1fr}
+  .pu-chips{grid-template-columns:repeat(2,1fr)}
+  .btn-copy{font-size:13px}
 }
 
 @media(prefers-color-scheme:dark){
   body{background:linear-gradient(180deg,#101826 0%,var(--bg) 280px,#0f1722 100%)}
   .rnav{background:rgba(17,24,39,.88)}
-  .rtab,.card,.field input,.field select,.field textarea,.aopt,.chip,.vendor-opt,.pt-mx-row,.mx-chip,.tv-chip,.group-chip,.pu-chip,.lt-chip,.scene-item{background:var(--sf)}
+  .rtab,.card,.field input,.field select,.field textarea,.aopt,.chip,.vendor-opt,.pt-mx-row,.mx-chip,.tv-chip,.group-chip,.pu-chip,.lt-chip,.scene-item,.wf-wrap,.wf-chip,.pending-line,.badge-cu{background:var(--sf)}
   .card-hd{background:linear-gradient(180deg,#242d3a 0%,var(--sf2) 100%)}
   .card-ico{background:#303a49}
   .card-lbl{color:var(--tx)}
