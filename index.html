@@ -6,261 +6,168 @@
 <title>中控交接清單 — 張榮發基金會</title>
 <style>
 :root{
-  --bg:#eef2f5;--sf:#fffefd;--sf2:#f7f9fb;
-  --ink:#172234;--ink2:#22324a;
-  --ac:#255aa8;--ac-bg:#eaf1ff;--ac-bd:#b9cdf4;--ac-tx:#1f4d92;
-  --ok:#16724c;--ok-bg:#e8f5ef;--ok-bd:#8bd1ad;
-  --no:#aa3428;--no-bg:#fdecea;--no-bd:#f2aaa4;
-  --wa:#8a5a11;--wa-bg:#fff5df;--wa-bd:#f1c978;
-  --pu:#6841a3;--pu-bg:#f1ecfb;--pu-bd:#c9b8ee;
-  --tx:#1c2430;--tx2:#667085;--tx3:#a8b0bc;
-  --bd:#dce2ea;--bd2:#c9d2dd;
-  --shadow:0 12px 30px rgba(23,34,52,.08);
-  --shadow-sm:0 5px 16px rgba(23,34,52,.07);
-  --r:8px;--rs:7px;
+  --bg:#f0efe9;--sf:#fff;--sf2:#f6f5f2;
+  --ac:#1a73e8;--ac-bg:#e8f0fe;--ac-bd:#a8c7fa;--ac-tx:#1557b0;
+  --ok:#1a7a50;--ok-bg:#e6f4ee;--ok-bd:#86c9a8;
+  --no:#b03020;--no-bg:#fde8e6;--no-bd:#f5a8a4;
+  --wa:#7a4a00;--wa-bg:#fff3e0;--wa-bd:#ffcc80;
+  --pu:#5b21b6;--pu-bg:#ede9fe;--pu-bd:#c4b5fd;
+  --tx:#1c1c1e;--tx2:#6e6e73;--tx3:#b0afab;
+  --bd:#e0ddd6;--bd2:#c8c4bc;
+  --r:12px;--rs:8px;
 }
 @media(prefers-color-scheme:dark){:root{
-  --bg:#111827;--sf:#1d2430;--sf2:#242d3a;--ink:#101826;--ink2:#172234;
-  --tx:#f4f7fb;--tx2:#b9c2cf;--tx3:#788394;
-  --bd:#303a49;--bd2:#455062;--shadow:0 16px 32px rgba(0,0,0,.24);--shadow-sm:0 8px 18px rgba(0,0,0,.2);
-  --ac-bg:#1b3156;--ac-bd:#456fb4;--ac-tx:#9ac1ff;
+  --bg:#1c1c1e;--sf:#2c2c2e;--sf2:#3a3a3c;
+  --tx:#f2f2f7;--tx2:#aeaeb2;--tx3:#6e6e73;
+  --bd:#3a3a3c;--bd2:#5a5a5e;
+  --ac-bg:#1c3055;--ac-bd:#3b6bb5;--ac-tx:#82b4f5;
   --ok-bg:#0f3324;--ok-bd:#2d6b4a;
   --no-bg:#3a1a18;--no-bd:#7a3a36;
   --wa-bg:#3a2800;--wa-bd:#9a6e00;--wa:#e8a020;
   --pu-bg:#2d1b69;--pu-bd:#7c3aed;--pu:#a78bfa;
 }}
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 260px,#e8edf2 100%);color:var(--tx);font-family:-apple-system,'Helvetica Neue','Noto Sans TC',sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,'Helvetica Neue','Noto Sans TC',sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
 
-.hdr{background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 100%);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 18px 14px;position:sticky;top:0;z-index:100;box-shadow:0 10px 26px rgba(23,34,52,.18)}
-.hdr-title{font-size:18px;font-weight:700;display:flex;align-items:center;gap:9px;color:#fff;letter-spacing:.02em}
-.dot{width:8px;height:8px;border-radius:50%;background:#34c759;box-shadow:0 0 0 4px rgba(52,199,89,.16);flex-shrink:0}
-.hdr-sub{font-size:12px;color:rgba(255,255,255,.66);margin-top:4px}
+.hdr{background:var(--sf);border-bottom:1px solid var(--bd);padding:13px 18px;position:sticky;top:0;z-index:100}
+.hdr-title{font-size:17px;font-weight:600;display:flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:#34c759;flex-shrink:0}
+.hdr-sub{font-size:12px;color:var(--tx2);margin-top:3px}
 
-.rnav{background:rgba(248,250,252,.88);border-bottom:1px solid var(--bd);display:flex;gap:8px;padding:10px 18px;position:sticky;top:76px;z-index:90;overflow-x:auto;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.rtab{flex:1;min-width:88px;padding:9px 12px;border:1px solid var(--bd);border-radius:999px;background:rgba(255,255,255,.78);color:var(--tx2);font-size:14px;font-weight:650;cursor:pointer;transition:all .15s;font-family:inherit;box-shadow:0 1px 0 rgba(255,255,255,.8) inset}
-.rtab.on{color:#fff;background:var(--ink2);border-color:var(--ink2);font-weight:700;box-shadow:0 8px 18px rgba(23,34,52,.18)}
+.rnav{background:var(--sf);border-bottom:1px solid var(--bd);display:flex;padding:0 18px}
+.rtab{flex-shrink:0;padding:11px 14px;border:none;background:transparent;color:var(--tx2);font-size:14px;font-weight:500;cursor:pointer;border-bottom:2.5px solid transparent;transition:all .15s;font-family:inherit}
+.rtab.on{color:var(--ac);border-bottom-color:var(--ac);font-weight:600}
 
-.main{padding:18px 16px 44px;max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.main{padding:14px 18px 40px;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:11px}
 
-.card{background:var(--sf);border:1px solid rgba(201,210,221,.82);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
-.card-hd{padding:12px 15px;border-bottom:1px solid var(--bd);background:linear-gradient(180deg,#fbfcfe 0%,var(--sf2) 100%);display:flex;align-items:center;gap:9px}
-.card-toggle{cursor:pointer;user-select:none}
-.card.is-collapsed .card-hd{border-bottom:none}
-.card-ico{width:24px;height:24px;border-radius:7px;background:#eef3f8;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;box-shadow:0 1px 0 rgba(255,255,255,.9) inset}
-.card-lbl{font-size:12px;font-weight:750;color:var(--ink2);letter-spacing:.04em;text-transform:uppercase;flex:1}
-.card-caret{margin-left:auto;color:var(--tx3);font-size:13px;font-weight:800;transition:transform .15s}
-.card.is-collapsed .card-caret{transform:rotate(-90deg)}
-.card-bd{padding:16px;display:flex;flex-direction:column;gap:14px}
-.inner-div{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);margin:2px 0}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.card-hd{padding:10px 15px;border-bottom:1px solid var(--bd);background:var(--sf2);display:flex;align-items:center;gap:7px}
+.card-ico{font-size:14px;line-height:1}
+.card-lbl{font-size:11px;font-weight:600;color:var(--tx2);letter-spacing:.5px;text-transform:uppercase}
+.card-bd{padding:15px;display:flex;flex-direction:column;gap:12px}
 
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:12px;color:var(--tx2);font-weight:650}
-.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--bd2);border-radius:var(--rs);background:#fff;color:var(--tx);font-size:14px;font-family:inherit;transition:border-color .15s,box-shadow .15s,background .15s;-webkit-appearance:none;box-shadow:0 1px 0 rgba(255,255,255,.92) inset}
-.field input{min-height:42px}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,90,168,.13),0 1px 0 rgba(255,255,255,.92) inset;background:#fff}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12px;color:var(--tx2);font-weight:500}
+.field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1px solid var(--bd2);border-radius:var(--rs);background:var(--sf2);color:var(--tx);font-size:14px;font-family:inherit;-webkit-appearance:none;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(26,115,232,.1)}
 .field textarea{resize:vertical;min-height:72px;line-height:1.6}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 
 /* arrival */
-.aopts{display:flex;gap:7px}
-.aopt{flex:1;padding:10px 4px;border:1px solid var(--bd2);border-radius:var(--rs);background:#fff;color:var(--tx2);text-align:center;cursor:pointer;transition:all .15s;user-select:none;box-shadow:var(--shadow-sm)}
+.aopts{display:flex;gap:6px}
+.aopt{flex:1;padding:9px 4px;border:1px solid var(--bd2);border-radius:var(--rs);background:var(--sf2);color:var(--tx2);text-align:center;cursor:pointer;transition:all .15s;user-select:none}
 .aopt-t{font-size:15px;font-weight:600;display:block}
 .aopt-s{font-size:11px;opacity:.7;display:block;margin-top:1px}
-.aopt.on{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa);font-weight:700;box-shadow:0 0 0 3px rgba(138,90,17,.08)}
+.aopt.on{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa);font-weight:600}
 
 /* chips */
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
-.chip{padding:8px 12px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none;box-shadow:0 1px 0 rgba(255,255,255,.9) inset}
-.chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx);font-weight:650;box-shadow:0 0 0 3px rgba(37,90,168,.08)}
-
-/* vendor 3-option */
-.vendor-opts{display:flex;flex-direction:column;gap:8px}
-.vendor-opt{padding:12px 14px;border:1px solid var(--bd2);border-radius:var(--rs);background:#fff;color:var(--tx2);font-size:14px;font-weight:650;cursor:pointer;transition:all .15s;user-select:none;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-sm)}
-.vo-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);flex-shrink:0;transition:background .15s}
-.vendor-opt.v-none{border-color:var(--tx3);color:var(--tx2)}.vendor-opt.v-none .vo-dot{background:var(--tx3)}
-.vendor-opt.v-audio{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}.vendor-opt.v-audio .vo-dot{background:var(--ok)}
-.vendor-opt.v-sys{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}.vendor-opt.v-sys .vo-dot{background:var(--ac)}
-
-/* matrix chips */
-.pt-mx-block{display:flex;flex-direction:column;gap:8px;margin-top:6px}
-.pt-mx-row{border:1px solid var(--ac-bd);border-radius:var(--rs);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
-.pt-mx-hd{background:var(--ac-bg);padding:8px 11px;font-size:12px;font-weight:750;color:var(--ac-tx)}
-.pt-mx-bd{padding:10px 11px}
-.pt-mx-hint{font-size:11px;color:var(--tx3);margin-bottom:5px}
-.mx-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.mx-chip{padding:7px 5px;border:1px solid var(--bd2);border-radius:6px;font-size:12px;color:var(--tx2);cursor:pointer;background:#fff;transition:all .12s;user-select:none;text-align:center;min-width:0}
-.mx-chip .mn{display:block;font-weight:600;font-size:11px;line-height:1.3}
-.mx-chip .ml{display:block;font-size:10px;opacity:.65;line-height:1.2}
-.mx-chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx);font-weight:650}
-.pt-empty{font-size:12px;color:var(--tx3);padding:2px 0;font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.chip{padding:6px 12px;border:1px solid var(--bd2);border-radius:20px;font-size:13px;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx);font-weight:500}
 
 /* TV wall */
-.tv-modes{display:flex;flex-wrap:wrap;gap:7px}
-.tv-chip{padding:8px 12px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:650;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none}
-.tv-chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx);box-shadow:0 0 0 3px rgba(37,90,168,.08)}
-.group-chips{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
-.group-chip{padding:9px 4px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:750;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none;text-align:center}
-.group-chip.on{background:var(--pu-bg);border-color:var(--pu-bd);color:var(--pu);box-shadow:0 0 0 3px rgba(104,65,163,.08)}
-.relay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.relay-room-grid{display:flex;flex-wrap:wrap;gap:7px}
-.relay-main{display:block;font-weight:800;font-size:12px;line-height:1.25}
-.relay-sub{display:block;font-size:10px;line-height:1.25;opacity:.72;margin-top:2px}
-.relay-custom{display:grid;grid-template-columns:1fr 74px;gap:7px;align-items:center}
-
-/* waterfall signal builder */
-.wf-wrap{display:flex;flex-direction:column;border:1px solid var(--bd2);border-radius:var(--rs);overflow:hidden;background:#fff}
-.wf-step{display:flex;flex-direction:column;gap:9px;padding:12px;border-bottom:1px solid var(--bd);transition:opacity .15s}
-.wf-step:last-child{border-bottom:none}
-.wf-step.dim{opacity:.38;pointer-events:none}
-.wf-hd{display:flex;align-items:center;gap:7px}
-.wf-badge{width:22px;height:22px;border-radius:7px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.wf-badge.done{background:var(--ok);color:#fff}
-.wf-badge.active{background:var(--ac);color:#fff}
-.wf-badge.idle{background:var(--bd2);color:var(--tx3)}
-.wf-title{font-size:12px;font-weight:700;color:var(--tx2)}
-.wf-val{font-size:12px;font-weight:700;color:var(--ok);margin-left:auto}
-.wf-chips{display:flex;flex-wrap:wrap;gap:6px}
-.wf-chip{padding:7px 10px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:12px;font-weight:650;color:var(--tx2);cursor:pointer;background:#fff;transition:all .12s;user-select:none;text-align:center}
-.wf-chip.on-pt{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa)}
-.wf-chip.on-in{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}
-.wf-chip.on-out{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}
-.wf-chip .wc-n{display:block;font-weight:800;font-size:11px;line-height:1.3}
-.wf-chip .wc-l{display:block;font-size:10px;opacity:.7;line-height:1.2}
-.wf-confirm{display:flex;justify-content:flex-end;padding-top:4px}
-.btn-wf-confirm{padding:9px 16px;border:none;border-radius:var(--rs);background:var(--ok);color:#fff;font-size:13px;font-weight:750;cursor:pointer;font-family:inherit;transition:opacity .15s}
-.btn-wf-confirm:disabled{opacity:.38;cursor:not-allowed}
-.pending-lines{display:flex;flex-direction:column;gap:6px}
-.pending-line{background:#fff;border:1px solid var(--bd);border-radius:var(--rs);padding:9px 11px;display:flex;align-items:center;gap:6px;font-size:12px;flex-wrap:wrap;box-shadow:var(--shadow-sm)}
-.pl-pt{color:var(--wa);font-weight:700}
-.pl-in{color:var(--ac-tx);font-weight:700}
-.pl-out{color:var(--ok);font-weight:700}
-.arr{color:var(--tx3);font-size:11px;flex-shrink:0}
-.pl-del{border:none;background:transparent;color:var(--tx3);font-size:15px;cursor:pointer;padding:0;line-height:1;margin-left:auto;flex-shrink:0}
-.pl-del:hover{color:var(--no)}
-.scene-badges{display:flex;flex-wrap:wrap;gap:5px}
-.badge{padding:4px 8px;border-radius:6px;font-size:11px;font-weight:700}
-.badge-tv{background:var(--ac-bg);border:1px solid var(--ac-bd);color:var(--ac-tx)}
-.badge-pu{background:var(--ok-bg);border:1px solid var(--ok-bd);color:var(--ok)}
-.badge-cu{background:#fff;border:1px solid var(--bd2);color:var(--tx2)}
-.scene-sig{font-size:12px;color:var(--tx);line-height:1.6}
-.s-pt{color:var(--wa);font-weight:700}
-.s-in{color:var(--ac-tx);font-weight:700}
-.s-out{color:var(--ok);font-weight:700}
-.s-arr{color:var(--tx3);font-size:10px;margin:0 2px}
+.tv-modes{display:flex;flex-wrap:wrap;gap:6px}
+.tv-chip{padding:7px 12px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:500;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.tv-chip.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}
 .pu-chips{display:flex;flex-wrap:wrap;gap:6px}
-.pu-chip{padding:7px 12px;border:1px solid var(--bd2);border-radius:999px;font-size:12px;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none}
-.pu-chip.on{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);font-weight:650}
+.pu-chip{padding:5px 12px;border:1px solid var(--bd2);border-radius:20px;font-size:12px;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.pu-chip.on{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);font-weight:500}
 .tv-custom{display:flex;align-items:center;gap:7px;margin-top:6px}
 .tv-custom span{font-size:12px;color:var(--tx2);white-space:nowrap}
 
-/* light scene chips */
-.lt-chips{display:flex;flex-wrap:wrap;gap:6px}
-.lt-chip{padding:8px 11px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:650;color:var(--tx2);cursor:pointer;background:#fff;transition:all .15s;user-select:none}
-.lt-chip.on{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa);box-shadow:0 0 0 3px rgba(138,90,17,.08)}
+/* ─── WATERFALL signal builder ─── */
+.wf-wrap{display:flex;flex-direction:column;gap:0;border:1px solid var(--bd2);border-radius:var(--rs);overflow:hidden}
 
-/* scene list */
-.scene-list{display:flex;flex-direction:column;gap:8px}
-.scene-item{background:#fff;border:1px solid var(--bd);border-radius:var(--rs);padding:11px 12px;display:flex;align-items:flex-start;gap:9px;box-shadow:var(--shadow-sm)}
-.scene-num{width:24px;height:24px;border-radius:7px;background:var(--ac-bg);border:1px solid var(--ac-bd);color:var(--ac-tx);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.lt-num{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa)}
-.scene-body{flex:1;display:flex;flex-direction:column;gap:3px}
-.scene-line1{font-size:13px;color:var(--tx);font-weight:500;line-height:1.4}
-.scene-line2{font-size:12px;color:var(--tx2)}
-.scene-del{border:none;background:transparent;color:var(--tx3);font-size:16px;cursor:pointer;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0}
+.wf-step{display:flex;flex-direction:column;gap:8px;padding:12px;border-bottom:1px solid var(--bd);transition:opacity .2s}
+.wf-step:last-child{border-bottom:none}
+.wf-step.dim{opacity:.35;pointer-events:none}
+
+.wf-hd{display:flex;align-items:center;gap:7px}
+.wf-badge{width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.wf-badge.done{background:var(--ok);color:#fff}
+.wf-badge.active{background:var(--ac);color:#fff}
+.wf-badge.idle{background:var(--bd2);color:var(--tx3)}
+.wf-title{font-size:12px;font-weight:600;color:var(--tx2)}
+.wf-val{font-size:12px;font-weight:600;color:var(--ok);margin-left:auto}
+
+.wf-chips{display:flex;flex-wrap:wrap;gap:5px}
+.wf-chip{padding:6px 10px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:12px;font-weight:500;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .12s;user-select:none;text-align:center}
+.wf-chip.on-pt{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa)}
+.wf-chip.on-in{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}
+.wf-chip.on-out{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}
+.wf-chip .wc-n{display:block;font-weight:700;font-size:11px;line-height:1.3}
+.wf-chip .wc-l{display:block;font-size:10px;opacity:.7;line-height:1.2}
+
+.wf-confirm{display:flex;justify-content:flex-end;padding-top:4px}
+.btn-wf-confirm{padding:8px 16px;border:none;border-radius:var(--rs);background:var(--ok);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-wf-confirm:disabled{opacity:.35;cursor:not-allowed}
+
+/* pending signal lines */
+.pending-lines{display:flex;flex-direction:column;gap:5px}
+.pending-line{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:8px 11px;display:flex;align-items:center;gap:6px;font-size:12px;flex-wrap:wrap}
+.pl-pt{color:var(--wa);font-weight:600}
+.pl-in{color:var(--ac-tx);font-weight:600}
+.pl-out{color:var(--ok);font-weight:600}
+.arr{color:var(--tx3);font-size:11px;flex-shrink:0}
+.pl-del{border:none;background:transparent;color:var(--tx3);font-size:15px;cursor:pointer;padding:0;line-height:1;margin-left:auto;flex-shrink:0}
+.pl-del:hover{color:var(--no)}
+
+/* confirmed scene cards */
+.scene-list{display:flex;flex-direction:column;gap:7px}
+.scene-item{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;display:flex;align-items:flex-start;gap:8px}
+.scene-num{width:22px;height:22px;border-radius:50%;background:var(--ac-bg);border:1px solid var(--ac-bd);color:var(--ac-tx);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.lt-num{background:var(--wa-bg) !important;border-color:var(--wa-bd) !important;color:var(--wa) !important}
+.scene-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.scene-badges{display:flex;flex-wrap:wrap;gap:4px}
+.badge{padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-tv{background:var(--ac-bg);border:1px solid var(--ac-bd);color:var(--ac-tx)}
+.badge-pu{background:var(--ok-bg);border:1px solid var(--ok-bd);color:var(--ok)}
+.badge-cu{background:var(--sf2);border:1px solid var(--bd2);color:var(--tx2)}
+.scene-sig{font-size:12px;color:var(--tx);line-height:1.6}
+.s-pt{color:var(--wa);font-weight:600}
+.s-in{color:var(--ac-tx);font-weight:600}
+.s-out{color:var(--ok);font-weight:600}
+.s-arr{color:var(--tx3);font-size:10px;margin:0 2px}
+.scene-del{border:none;background:transparent;color:var(--tx3);font-size:16px;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0}
 .scene-del:hover{color:var(--no)}
+.draft-sep{height:1px;background:var(--bd);margin:2px 0}
+.draft-lbl{font-size:11px;font-weight:600;color:var(--tx3);letter-spacing:.4px;text-transform:uppercase}
 
-/* draft section */
-.draft-wrap{display:flex;flex-direction:column;gap:13px;padding-top:4px}
-.draft-sep{height:1px;background:var(--bd);margin:4px 0}
-.draft-lbl{font-size:11px;font-weight:600;color:var(--tx3);letter-spacing:.4px;text-transform:uppercase;padding-bottom:2px}
+/* lighting */
+.lt-chips{display:flex;flex-wrap:wrap;gap:6px}
+.lt-chip{padding:6px 11px;border:1px solid var(--bd2);border-radius:var(--rs);font-size:13px;font-weight:500;color:var(--tx2);cursor:pointer;background:var(--sf2);transition:all .15s;user-select:none}
+.lt-chip.on{background:var(--wa-bg);border-color:var(--wa-bd);color:var(--wa)}
 
-/* add buttons */
-.btn-add{width:100%;padding:12px;border:1.5px dashed var(--ac-bd);border-radius:var(--rs);background:var(--ac-bg);color:var(--ac-tx);font-size:14px;font-weight:750;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+/* vendor */
+.vendor-opts{display:flex;flex-direction:column;gap:6px}
+.vendor-opt{padding:11px 14px;border:1px solid var(--bd2);border-radius:var(--rs);background:var(--sf2);color:var(--tx2);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;user-select:none;display:flex;align-items:center;gap:10px}
+.vo-dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);flex-shrink:0}
+.vendor-opt.v-none{border-color:var(--tx3)}.vendor-opt.v-none .vo-dot{background:var(--tx3)}
+.vendor-opt.v-audio{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}.vendor-opt.v-audio .vo-dot{background:var(--ok)}
+.vendor-opt.v-sys{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac-tx)}.vendor-opt.v-sys .vo-dot{background:var(--ac)}
+
+/* add / action buttons */
+.btn-add{width:100%;padding:11px;border:1.5px dashed var(--ac-bd);border-radius:var(--rs);background:var(--ac-bg);color:var(--ac-tx);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-add-lt{border-color:var(--wa-bd) !important;background:var(--wa-bg) !important;color:var(--wa) !important}
 .btn-add:active{opacity:.8}
-.btn-add-lt{border-color:var(--wa-bd);background:var(--wa-bg);color:var(--wa)}
 
-/* test info */
+.actions{display:flex;flex-direction:column;gap:7px;padding-bottom:16px}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-copy{width:100%;padding:14px;border:none;border-radius:var(--r);background:var(--ac);color:#fff;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-copy:active{opacity:.82}
+.btn-email{background:var(--ok) !important}
+.btn-clr{width:100%;padding:9px;border:1px solid var(--bd2);border-radius:var(--rs);background:transparent;color:var(--tx2);font-size:13px;cursor:pointer;font-family:inherit}
+
+/* test card */
 .test-card .card-hd{background:var(--pu-bg);border-color:var(--pu-bd)}
 .test-card .card-lbl{color:var(--pu)}
-
-/* actions */
-.actions{display:flex;flex-direction:column;gap:8px;padding:2px 0 16px}
-.btn-copy{width:100%;padding:14px;border:none;border-radius:var(--r);background:var(--ac);color:#fff;font-size:15px;font-weight:750;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .15s;box-shadow:0 10px 22px rgba(37,90,168,.2)}
-.btn-copy:active{opacity:.86;transform:translateY(1px)}
-.btn-email{background:var(--ok);box-shadow:0 10px 22px rgba(22,114,76,.18)}
-.btn-clr{width:100%;padding:10px;border:1px solid var(--bd2);border-radius:var(--rs);background:rgba(255,255,255,.5);color:var(--tx2);font-size:13px;cursor:pointer;font-family:inherit;transition:background .15s}
-.btn-clr:hover{background:var(--sf2)}
 
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:#1a7a50;color:#fff;padding:11px 22px;border-radius:22px;font-size:14px;font-weight:500;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;z-index:999}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.err{background:#b03020}
 
-@media(max-width:520px){
-  body{font-size:14px;background:linear-gradient(180deg,#fbfcfe 0%,var(--bg) 180px,#e8edf2 100%)}
-  .hdr{background:rgba(255,254,253,.96);border-bottom:1px solid var(--bd);padding:10px 14px 9px;box-shadow:0 6px 18px rgba(23,34,52,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-  .hdr-title{font-size:16px;gap:8px;color:var(--ink2)}
-  .hdr-sub{font-size:11px;margin-top:2px;color:var(--tx2)}
-  .dot{width:7px;height:7px;box-shadow:0 0 0 3px rgba(52,199,89,.14)}
-  .rnav{top:55px;padding:8px 10px;gap:6px;background:rgba(247,249,251,.94)}
-  .rtab{min-width:0;padding:8px 6px;font-size:13px}
-  .rtab.on{color:var(--ac-tx);background:var(--ac-bg);border-color:var(--ac-bd);box-shadow:0 4px 12px rgba(37,90,168,.12)}
-  .main{padding:10px 10px 32px;gap:10px}
-  .card{box-shadow:0 6px 18px rgba(23,34,52,.07)}
-  .card-hd{padding:10px 12px;gap:8px}
-  .card-ico{width:22px;height:22px;font-size:13px}
-  .card-lbl{font-size:12px}
-  .card-bd{padding:12px;gap:12px}
-  .row2{grid-template-columns:1fr}
-  .field input,.field select,.field textarea{font-size:15px;padding:10px 11px}
-  .field textarea{min-height:82px}
-  .aopts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-  .aopt{padding:9px 3px}
-  .chip,.tv-chip,.lt-chip,.pu-chip,.group-chip,.wf-chip{min-height:38px;display:flex;align-items:center;justify-content:center}
-  .chips,.tv-modes,.lt-chips,.pu-chips{gap:6px}
-  .tv-modes{display:grid;grid-template-columns:repeat(2,1fr)}
-  .tv-chip{text-align:center;padding:9px 6px}
-  .pu-chips{display:grid;grid-template-columns:repeat(3,1fr)}
-  .pu-chip{text-align:center;padding:8px 6px}
-  .group-chips{grid-template-columns:repeat(3,1fr)}
-  .wf-step{padding:11px;gap:8px}
-  .wf-hd{align-items:flex-start}
-  .wf-title{font-size:12px;line-height:1.35}
-  .wf-val{font-size:12px;line-height:1.35;text-align:right;max-width:54%}
-  .wf-chips{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-  .wf-chip{padding:8px 5px;line-height:1.25;min-width:0}
-  .wf-chip .wc-l{font-size:10px}
-  .btn-wf-confirm,.btn-add,.btn-copy{min-height:44px}
-  .pending-line{align-items:flex-start;gap:5px;padding:9px;line-height:1.45}
-  .pending-line .pl-out{width:100%;padding-left:22px}
-  .scene-item{padding:10px;gap:8px}
-  .scene-body{min-width:0}
-  .scene-badges{gap:4px}
-  .badge{font-size:11px;line-height:1.25}
-  .scene-sig{font-size:12px;line-height:1.55}
-  .relay-grid{grid-template-columns:repeat(2,1fr)}
-  .relay-custom{grid-template-columns:1fr 68px}
-  .actions{gap:7px}
-  .btn-copy{font-size:14px;padding:12px 8px}
-}
-
-@media(max-width:380px){
-  .row2{grid-template-columns:1fr}
-  .group-chips{grid-template-columns:repeat(3,1fr)}
-  .relay-grid,.wf-chips,.tv-modes{grid-template-columns:1fr}
-  .pu-chips{grid-template-columns:repeat(2,1fr)}
-  .btn-copy{font-size:13px}
-}
-
-@media(prefers-color-scheme:dark){
-  body{background:linear-gradient(180deg,#101826 0%,var(--bg) 280px,#0f1722 100%)}
-  .rnav{background:rgba(17,24,39,.88)}
-  .rtab,.card,.field input,.field select,.field textarea,.aopt,.chip,.vendor-opt,.pt-mx-row,.mx-chip,.tv-chip,.group-chip,.pu-chip,.lt-chip,.scene-item,.wf-wrap,.wf-chip,.pending-line,.badge-cu{background:var(--sf)}
-  .card-hd{background:linear-gradient(180deg,#242d3a 0%,var(--sf2) 100%)}
-  .card-ico{background:#303a49}
-  .card-lbl{color:var(--tx)}
-  .btn-clr{background:rgba(36,45,58,.55)}
-}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.wf-step{animation:slideIn .18s ease}
 </style>
 </head>
 <body>
@@ -284,195 +191,210 @@ body{min-height:100vh;background:linear-gradient(180deg,#f7f4ee 0%,var(--bg) 260
 const RM={
   '1101':{label:'1101廳',hasStageLight:true,
     pts:['左側舞台','中側舞台','右側舞台','電視牆後方','後方分配盤','中控室'],
-    mx:[{n:1,l:'舞台右'},{n:2,l:'電視牆後1'},{n:3,l:'電視牆後2'},{n:4,l:'電視牆後3'},
-        {n:5,l:'外接1'},{n:6,l:'外接2'},{n:7,l:'16x16'},{n:8,l:'中控'}],
+    mxIn:[{n:1,l:'舞台右'},{n:2,l:'電視牆後1'},{n:3,l:'電視牆後2'},{n:4,l:'電視牆後3'},
+          {n:5,l:'外接1'},{n:6,l:'外接2'},{n:7,l:'16x16 OUT-1'},{n:8,l:'中控'}],
+    mxOut:[{n:1,l:'電視牆1'},{n:2,l:'電視牆2'},{n:3,l:'電視牆3'},{n:4,l:'電視牆4'},
+           {n:5,l:'16x16 IN-1'},{n:6,l:'16x16 IN-2'},{n:7,l:'16x16 IN-3'},{n:8,l:'16x16 IN-4'}],
     tvModes:['全屏','2畫面','3畫面(黑)','3畫面','全:1:全','1:全:1','自訂1','自訂2','自訂3','展示']},
   '1001':{label:'1001廳',hasStageLight:false,
     pts:['左側舞台','右側舞台','第一排座位','後方分配盤'],
-    mx:[{n:1,l:'講台右'},{n:2,l:'講台右2'},{n:3,l:'座位區'},{n:4,l:'外接1'},
-        {n:5,l:'外接2'},{n:6,l:'外接3'},{n:7,l:'16x16 Out1'},{n:8,l:'中控'}],
+    mxIn:[{n:1,l:'講台右'},{n:2,l:'講台右2'},{n:3,l:'座位區'},{n:4,l:'外接1'},
+          {n:5,l:'外接2'},{n:6,l:'外接3'},{n:7,l:'16x16 Out1'},{n:8,l:'中控'}],
+    mxOut:[{n:1,l:'電視牆1'},{n:2,l:'電視牆2'},{n:3,l:'電視牆3'},{n:4,l:'電視牆4'},
+           {n:5,l:'16x16 IN-1'},{n:6,l:'16x16 IN-2'},{n:7,l:'16x16 IN-3'},{n:8,l:'16x16 IN-4'}],
     tvModes:['全屏','3畫面(黑)','4畫面(黑)','1:2:1','1:全版:1','3畫面(底)','4畫面','自訂1','自訂2','展示']},
   '801':{label:'801廳',hasStageLight:false,
     pts:['左側舞台','右側舞台','第一排座位','後方分配盤'],
-    mx:[{n:1,l:'講台右'},{n:2,l:'講台右2'},{n:3,l:'座位區'},{n:4,l:'外接1'},
-        {n:5,l:'外接2'},{n:6,l:'外接3'},{n:7,l:'16x16 Out1'},{n:8,l:'中控'}],
+    mxIn:[{n:1,l:'講台右'},{n:2,l:'講台右2'},{n:3,l:'座位區'},{n:4,l:'外接1'},
+          {n:5,l:'外接2'},{n:6,l:'外接3'},{n:7,l:'16x16 Out1'},{n:8,l:'中控'}],
+    mxOut:[{n:1,l:'電視牆1'},{n:2,l:'電視牆2'},{n:3,l:'電視牆3'},{n:4,l:'電視牆4'},
+           {n:5,l:'16x16 IN-1'},{n:6,l:'16x16 IN-2'},{n:7,l:'16x16 IN-3'},{n:8,l:'16x16 IN-4'}],
     tvModes:['全屏','3畫面(黑)','4畫面(黑)','1:2:1','1:全版:1','3畫面(底)','4畫面','自訂1','自訂2','展示']}
 };
-Object.values(RM).forEach(r=>{
-  if(!r.mxIn)r.mxIn=r.mx;
-  if(!r.mxOut)r.mxOut=[
-    {n:1,l:'電視牆1'},{n:2,l:'電視牆2'},{n:3,l:'電視牆3'},{n:4,l:'電視牆4'},
-    {n:5,l:'16x16 IN-1'},{n:6,l:'16x16 IN-2'},{n:7,l:'16x16 IN-3'},{n:8,l:'16x16 IN-4'}
-  ];
-});
+
 const ARRIVE=[['07:30','提早'],['08:15','提早'],['08:30','正常']];
-const TEST_PERSONS=['彥宇','偉偉','佳學','77'];
-const BIZ_OWNERS=['沙課','武勇','定洲','vickey','joy','冠輝','三和','瑋平','忠謙'];
 const TV_PURPOSES=['簡報','開場','主視覺'];
-const TV_GROUPS=[1,2,3,4,5,6].map(n=>`群組${n}`);
 const GROUPS=[1,2,3,4,5,6];
-const RELAY_INPUTS=[
-  {n:1,src:'8x8 OUT-5'},
-  {n:2,src:'8x8 OUT-6'},
-  {n:3,src:'8x8 OUT-7'},
-  {n:4,src:'8x8 OUT-8'},
-  {n:5,src:'攝影機'}
-];
-const RELAY_OUTPUTS=[11,12,13,14,15,16];
-const RELAY_ROOMS={
-  '1101':['1102','1103','1110a','1110b','1110c','1110d'],
-  '1001':['1002','1003','1005','1006','1007'],
-  '801':['802','803','810b']
-};
+const BGM_SRC=['客戶電腦','中控電腦','廠商設備','串流平台','其他'];
 const STAGE_SCENES=['全亮','場景一','場景二','場景三','場景四','場景五','場景六','場景七','場景八','全暗'];
-const ROOM_SCENES= ['全亮','場景一','場景二','場景三','場景四','場景五','場景六','全暗'];
+const ROOM_SCENES=['全亮','場景一','場景二','場景三','場景四','場景五','場景六','全暗'];
 const VENDOR_OPTS=[
   {k:'none', cls:'v-none',  label:'無廠商'},
   {k:'audio',cls:'v-audio', label:'有廠商・自帶音響'},
   {k:'sys',  cls:'v-sys',   label:'有廠商・接系統'}
 ];
+const TEST_PERSONS=['彥宇','偉偉','佳學','77'];
+const BIZ_OWNERS=['沙課','武勇','定洲','vickey','joy','冠輝','三和','瑋平','忠謙'];
 
-const LS='av_v8';
-const COLLAPSE_DEFAULTS={vendor:true,lights:true,relay:true,notes:true,test:false};
-const COLLAPSE_PRESET='test-open-v1';
+const LS='av_v10';
 let cur='1101';
 let st=lod();
-let editingIdx=-1;
-applyCollapseDefaults();
+let editingIdx=-1; // -1 = new scene, >=0 = editing scene at that index
 
 function lod(){try{const d=localStorage.getItem(LS);return d?JSON.parse(d):mk()}catch{return mk()}}
 function mk(){return{
-  '1101':{avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}},
-  '1001':{avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}},
-  '801': {avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}}
+  '1101':{avScenes:[],avDraft:{sigs:[],sd:{}},ltScenes:[],ltDraft:{}},
+  '1001':{avScenes:[],avDraft:{sigs:[],sd:{}},ltScenes:[],ltDraft:{}},
+  '801': {avScenes:[],avDraft:{sigs:[],sd:{}},ltScenes:[],ltDraft:{}}
 }}
-function applyCollapseDefaults(){
-  ['1101','1001','801'].forEach(room=>{
-    if(!st[room])st[room]={avScenes:[],avDraft:{},ltScenes:[],ltDraft:{}};
-    if(st[room].collapsePreset!==COLLAPSE_PRESET){
-      st[room].collapsed={...COLLAPSE_DEFAULTS};
-      st[room].collapsePreset=COLLAPSE_PRESET;
-    }
-  });
-  sav();
-}
 function sav(){try{localStorage.setItem(LS,JSON.stringify(st))}catch{}}
 function today(){return new Date().toISOString().split('T')[0]}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
 
 function S(){return st[cur]}
-function AD(){
-  if(!S().avDraft)S().avDraft={sigs:[],sd:{}};
-  if(!S().avDraft.sigs)S().avDraft.sigs=[];
-  if(!S().avDraft.sd)S().avDraft.sd={};
-  return S().avDraft;
-}
+function AD(){if(!S().avDraft)S().avDraft={sigs:[],sd:{}};return S().avDraft}
 function LD(){if(!S().ltDraft)S().ltDraft={};return S().ltDraft}
-function SD(){return AD().sd}
+function SD(){if(!AD().sd)AD().sd={};return AD().sd}
 function avSc(){if(!S().avScenes)S().avScenes=[];return S().avScenes}
 function ltSc(){if(!S().ltScenes)S().ltScenes=[];return S().ltScenes}
-function pSigs(){return AD().sigs}
-function dMx(pt){return(AD().pcMatrix||{})[pt]||[]}
+function pSigs(){if(!AD().sigs)AD().sigs=[];return AD().sigs}
+
+/* label helpers */
 function inLbl(n){const m=RM[cur].mxIn.find(x=>x.n===n);return m?`IN${n}·${m.l}`:`IN${n}`}
-function outLbl(ns){
-  if(!Array.isArray(ns))ns=[ns];
-  return ns.sort((a,b)=>a-b).map(n=>{const m=RM[cur].mxOut.find(x=>x.n===n);return`OUT${n}·${m?m.l:n}`;}).join('、');
-}
+function outLbl(ns){if(!Array.isArray(ns))ns=[ns];return ns.sort((a,b)=>a-b).map(n=>{const m=RM[cur].mxOut.find(x=>x.n===n);return`OUT${n}·${m?m.l:n}`;}).join(', ')}
 
-/* ── scene summaries ── */
-function avPtsLine(sc){
-  const pts=sc.pts||[];
-  if(!pts.length)return null;
-  return pts.map(pt=>{
-    const sel=((sc.pcMatrix||{})[pt]||[]).sort((a,b)=>a-b).map(n=>{
-      const m=RM[cur].mx.find(x=>x.n===n);
-      return`IN${n}${m&&!m.l.startsWith('IN')?'·'+m.l:''}`;
-    });
-    return`${pt} → ${sel.length?sel.join(', '):'─'}`;
-  }).join('　');
-}
-function avTvLine(sc){
-  return[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ')||null;
-}
-function avGroupLine(sc){
-  const groups=sc.groups||[];
-  return groups.length?`套用：${groups.join('、')}`:null;
-}
-function ltLine(sc){
-  const parts=[];
-  if(sc.purpose)parts.push(`【${sc.purpose}】`);
-  if(RM[cur].hasStageLight&&sc.stageLight)parts.push(`舞台：${sc.stageLight}`);
-  if(sc.roomLight)parts.push(`場燈：${sc.roomLight}`);
-  return parts.join('　')||'─';
-}
-
-/* ── scene list HTML ── */
-function avSceneListHtml(){
-  const sc=avSc();if(!sc.length)return'';
-  return`<div class="scene-list">${sc.map((s,i)=>{
-    const l1=avPtsLine(s),l2=avTvLine(s),l3=avGroupLine(s);
-    return`<div class="scene-item">
-      <div class="scene-num">${i+1}</div>
-      <div class="scene-body">
-        ${l1?`<div class="scene-line1">${l1}</div>`:''}
-        ${l2?`<div class="scene-line2">📺 ${l2}</div>`:''}
-        ${l3?`<div class="scene-line2">${l3}</div>`:''}
-      </div>
-      <button class="scene-del" onclick="delAv(${i})">✕</button>
-    </div>`;
-  }).join('')}</div><div class="draft-sep"></div>`;
-}
-function ltSceneListHtml(){
-  const sc=ltSc();if(!sc.length)return'';
-  return`<div class="scene-list">${sc.map((s,i)=>`
-    <div class="scene-item">
-      <div class="scene-num lt-num">${i+1}</div>
-      <div class="scene-body"><div class="scene-line1">${ltLine(s)}</div></div>
-      <button class="scene-del" onclick="delLt(${i})">✕</button>
-    </div>`).join('')}</div><div class="draft-sep"></div>`;
-}
-
+/* ── waterfall HTML ── */
 function wfHtml(){
-  const sd=SD(),r=RM[cur],d=AD();
-  const hasPt=!!sd.pt,hasIn=sd.inN!=null,hasOut=(sd.outNs||[]).length>0;
-  const badgeClass=step=>{
+  const sd=SD(),d=AD(),r=RM[cur];
+  const hasPt=!!sd.pt, hasIn=sd.inN!=null, hasOut=(sd.outNs||[]).length>0;
+
+  const badgeClass=(step)=>{
     if(step===1)return hasPt?'done':'active';
     if(step===2)return hasIn?'done':hasPt?'active':'idle';
-    return hasOut?'done':hasIn?'active':'idle';
+    if(step===3)return hasOut?'done':hasIn?'active':'idle';
   };
+
   return`<div class="wf-wrap">
+
+    <!-- Step 1: 接點 -->
     <div class="wf-step">
-      <div class="wf-hd"><div class="wf-title">群組</div>${d.group?`<div class="wf-val">群組${d.group}</div>`:''}</div>
-      <div class="wf-chips">${GROUPS.map(g=>`
-        <div class="wf-chip${d.group===g?' on-in':''}" onclick="setDGroup(${g})">群組${g}</div>`).join('')}</div>
+      <div class="wf-hd">
+        <div class="wf-badge ${badgeClass(1)}">${hasPt?'✓':'1'}</div>
+        <div class="wf-title">接點位置</div>
+        ${hasPt?`<div class="wf-val">${sd.pt}</div>`:''}
+      </div>
+      <div class="wf-chips">
+        ${[...r.pts,'其他'].map(p=>`
+          <div class="wf-chip${sd.pt===p?' on-pt':''}" onclick="wfSetPt('${p}')">${p}</div>`).join('')}
+      </div>
     </div>
-    <div class="wf-step">
-      <div class="wf-hd"><div class="wf-badge ${badgeClass(1)}">${hasPt?'✓':'1'}</div><div class="wf-title">接點位置</div>${hasPt?`<div class="wf-val">${sd.pt}</div>`:''}</div>
-      <div class="wf-chips">${[...r.pts,'其他'].map(p=>`
-        <div class="wf-chip${sd.pt===p?' on-pt':''}" onclick="wfSetPt('${p}')">${p}</div>`).join('')}</div>
-    </div>
+
+    <!-- Step 2: IN -->
     <div class="wf-step${hasPt?'':' dim'}">
-      <div class="wf-hd"><div class="wf-badge ${badgeClass(2)}">${hasIn?'✓':'2'}</div><div class="wf-title">8×8 矩陣 IN</div>${hasIn?`<div class="wf-val">${inLbl(sd.inN)}</div>`:''}</div>
-      <div class="wf-chips">${r.mxIn.map(({n,l})=>`
-        <div class="wf-chip${sd.inN===n?' on-in':''}" onclick="wfSetIn(${n})"><span class="wc-n">IN${n}</span><span class="wc-l">${l}</span></div>`).join('')}</div>
+      <div class="wf-hd">
+        <div class="wf-badge ${badgeClass(2)}">${hasIn?'✓':'2'}</div>
+        <div class="wf-title">8×8 矩陣 IN</div>
+        ${hasIn?`<div class="wf-val">${inLbl(sd.inN)}</div>`:''}
+      </div>
+      <div class="wf-chips">
+        ${r.mxIn.map(({n,l})=>`
+          <div class="wf-chip${sd.inN===n?' on-in':''}" onclick="wfSetIn(${n})">
+            <span class="wc-n">IN${n}</span><span class="wc-l">${l}</span>
+          </div>`).join('')}
+      </div>
     </div>
+
+    <!-- Step 3: OUT multi-select -->
     <div class="wf-step${hasIn?'':' dim'}">
-      <div class="wf-hd"><div class="wf-badge ${badgeClass(3)}">${hasOut?'✓':'3'}</div><div class="wf-title">8×8 矩陣 OUT <span style="font-weight:400;opacity:.7">（可複選）</span></div></div>
-      <div class="wf-chips">${r.mxOut.map(({n,l})=>`
-        <div class="wf-chip${(sd.outNs||[]).includes(n)?' on-out':''}" onclick="wfToggleOut(${n})"><span class="wc-n">OUT${n}</span><span class="wc-l">${l}</span></div>`).join('')}</div>
-      <div class="wf-confirm"><button class="btn-wf-confirm" onclick="wfConfirmLine()" ${hasOut&&hasIn&&hasPt?'':'disabled'}>✓ 加入這條路徑</button></div>
+      <div class="wf-hd">
+        <div class="wf-badge ${badgeClass(3)}">${hasOut?'✓':'3'}</div>
+        <div class="wf-title">8×8 矩陣 OUT <span style="font-weight:400;opacity:.7">（可複選）</span></div>
+      </div>
+      <div class="wf-chips">
+        ${r.mxOut.map(({n,l})=>`
+          <div class="wf-chip${(sd.outNs||[]).includes(n)?' on-out':''}" onclick="wfToggleOut(${n})">
+            <span class="wc-n">OUT${n}</span><span class="wc-l">${l}</span>
+          </div>`).join('')}
+      </div>
+      <div class="wf-confirm">
+        <button class="btn-wf-confirm" onclick="wfConfirmLine()" ${hasOut&&hasIn&&hasPt?'':'disabled'}>
+          ✓ 加入這條路徑
+        </button>
+      </div>
     </div>
+
+    <!-- 群組 -->
+    <div class="wf-step">
+      <div class="wf-hd">
+        <div class="wf-badge" style="background:var(--pu-bg);border:1px solid var(--pu-bd);color:var(--pu);width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">G</div>
+        <div class="wf-title">群組</div>
+        ${d.group?`<div class="wf-val" style="color:var(--pu)">群組${d.group}</div>`:''}
+      </div>
+      <div class="wf-chips">
+        ${GROUPS.map(g=>`
+          <div class="wf-chip${d.group===g?' on-in':''}" style="min-width:44px;text-align:center" onclick="setDGroup(${g})">群組${g}</div>`).join('')}
+      </div>
+    </div>
+
   </div>`;
 }
+
+/* waterfall interactions — no full re-render, just update DOM */
+function wfSetPt(p){
+  const sd=SD(),was=sd.pt===p;
+  sd.pt=was?'':p;
+  // reset downstream
+  if(was||!sd.pt){sd.inN=null;sd.outNs=[];}
+  sav();refreshWf();
+}
+function wfSetIn(n){
+  const sd=SD(),was=sd.inN===n;
+  sd.inN=was?null:n;
+  if(was)sd.outNs=[];
+  sav();refreshWf();
+}
+function wfToggleOut(n){
+  const sd=SD();
+  if(!sd.outNs)sd.outNs=[];
+  const i=sd.outNs.indexOf(n);
+  if(i>=0)sd.outNs.splice(i,1);else sd.outNs.push(n);
+  sav();refreshWf();
+}
+function wfConfirmLine(){
+  const sd=SD();
+  if(!sd.pt||sd.inN==null||!(sd.outNs||[]).length)return;
+  pSigs().push({pt:sd.pt,inN:sd.inN,outNs:[...sd.outNs]});
+  AD().sd={};// reset draft
+  sav();
+  // update pending list + waterfall without full re-render
+  refreshPendingLines();
+  refreshWf();
+  // scroll waterfall into view
+  document.getElementById('wf-container')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function refreshWf(){
+  const el=document.getElementById('wf-container');
+  if(el)el.innerHTML=wfHtml();
+}
+function refreshPendingLines(){
+  const el=document.getElementById('pending-container');
+  if(el)el.innerHTML=pendingLinesHtml();
+}
+
 function pendingLinesHtml(){
   const sigs=pSigs();
   if(!sigs.length)return'';
-  return`<div class="pending-lines">${sigs.map((sig,i)=>`
-    <div class="pending-line"><span class="pl-pt">${sig.pt}</span><span class="arr">→</span><span class="pl-in">${inLbl(sig.inN)}</span><span class="arr">→</span><span class="pl-out">${outLbl(sig.outNs)}</span><button class="pl-del" onclick="delPending(${i})">✕</button></div>`).join('')}</div>`;
+  return sigs.map((sig,i)=>`
+    <div class="pending-line">
+      <span class="pl-pt">${sig.pt}</span>
+      <span class="arr">→</span>
+      <span class="pl-in">${inLbl(sig.inN)}</span>
+      <span class="arr">→</span>
+      <span class="pl-out">${outLbl(sig.outNs)}</span>
+      <button class="pl-del" onclick="delPending(${i})">✕</button>
+    </div>`).join('');
 }
+function delPending(i){pSigs().splice(i,1);sav();refreshPendingLines();}
+
+/* ── scene card HTML ── */
 function avSceneHtml(sc,i){
   const tvMode=sc.tvMode||'',purpose=sc.tvPurpose||'',custom=(sc.tvCustom||'').trim();
-  const sigs=(sceneSignals(sc)||[]).map(sig=>`<div class="scene-sig"><span class="s-pt">${sig.pt}</span><span class="s-arr">→</span><span class="s-in">${inLbl(sig.inN)}</span><span class="s-arr">→</span><span class="s-out">${outLbl(sig.outNs||[sig.outN])}</span></div>`).join('');
+  const sigs=(sc.signals||[]).map(sig=>`<div class="scene-sig">
+    <span class="s-pt">${sig.pt}</span><span class="s-arr">→</span>
+    <span class="s-in">${inLbl(sig.inN)}</span><span class="s-arr">→</span>
+    <span class="s-out">${outLbl(sig.outNs||[sig.outN])}</span>
+  </div>`).join('');
   return`<div class="scene-item">
     <div class="scene-num">${i+1}</div>
     <div class="scene-body">
@@ -489,117 +411,24 @@ function avSceneHtml(sc,i){
     <button class="scene-del" onclick="delAv(${i})">✕</button>
   </div>`;
 }
-function sceneSignals(sc){
-  if(sc.signals)return sc.signals;
-  const sigs=[];
-  (sc.pts||[]).forEach(pt=>((sc.pcMatrix||{})[pt]||[]).forEach(inN=>sigs.push({pt,inN,outNs:[]})));
-  return sigs;
-}
-
-/* ── draft AV matrix rows ── */
-function draftPtRows(){
-  const pts=(AD().pts||[]);
-  if(!pts.length)return`<div class="pt-empty">選擇接點後，指定矩陣輸入</div>`;
-  return`<div class="pt-mx-block">${pts.map(pt=>{
-    const sel=dMx(pt);
-    return`<div class="pt-mx-row">
-      <div class="pt-mx-hd">${pt}</div>
-      <div class="pt-mx-bd">
-        <div class="pt-mx-hint">8×8 矩陣輸入（可複選）</div>
-        <div class="mx-chips">${RM[cur].mx.map(({n,l})=>`
-          <div class="mx-chip${sel.includes(n)?' on':''}" data-pt="${pt}" data-n="${n}" onclick="toggleDMx(this)">
-            <span class="mn">IN${n}</span><span class="ml">${l}</span>
-          </div>`).join('')}</div>
-      </div>
-    </div>`;
-  }).join('')}</div>`;
-}
-function refreshPtRows(){
-  const el=document.getElementById('avpt-rows');if(el)el.innerHTML=draftPtRows();
-}
-
-/* ── light scene chips ── */
-function ltChips(key,options,draftKey){
-  const v=LD()[draftKey]||'';
-  return`<div class="lt-chips">${options.map(o=>`
-    <div class="lt-chip${v===o?' on':''}" data-k="${draftKey}" data-v="${o}" onclick="setLtChip(this)">${o}</div>`).join('')}</div>`;
-}
-
-/* ── vendor HTML ── */
-function vendorHtml(){
-  const v=S().vendor||'';
-  return`<div class="vendor-opts">${VENDOR_OPTS.map(o=>`
-    <div class="vendor-opt${v===o.k?' '+o.cls:''}" data-v="${o.k}" onclick="setVendor(this)">
-      <div class="vo-dot"></div>${o.label}
-    </div>`).join('')}</div>`;
-}
-
-function isCollapsed(key){
-  const c=S().collapsed||{};
-  return Object.prototype.hasOwnProperty.call(c,key)?!!c[key]:!!COLLAPSE_DEFAULTS[key];
-}
-function cardHtml(key,icon,label,body,cls=''){
-  const closed=isCollapsed(key);
-  return`<div class="card ${cls}${closed?' is-collapsed':''}">
-    <div class="card-hd card-toggle" onclick="toggleCollapse('${key}')">
-      <span class="card-ico">${icon}</span><span class="card-lbl">${label}</span><span class="card-caret">⌄</span>
+function ltSceneHtml(sc,i){
+  const parts=[];
+  if(sc.purpose)parts.push(`【${sc.purpose}】`);
+  if(RM[cur].hasStageLight&&sc.stageLight)parts.push(`舞台：${sc.stageLight}`);
+  if(sc.roomLight)parts.push(`場燈：${sc.roomLight}`);
+  return`<div class="scene-item">
+    <div class="scene-num lt-num">${i+1}</div>
+    <div class="scene-body">
+      <div style="font-size:13px;font-weight:500">${parts.join('　')||'─'}</div>
     </div>
-    ${closed?'':`<div class="card-bd">${body}</div>`}
+    <button class="scene-del" onclick="delLt(${i})">✕</button>
   </div>`;
-}
-
-function relayInText(v){
-  const item=RELAY_INPUTS.find(x=>String(x.n)===String(v));
-  return item?`IN${item.n}（${item.src}）`:'─';
-}
-function relayOutText(v){return v?`OUT${v}`:'─'}
-function relayHtml(s){
-  return cardHtml('relay','🔁','串場需求',`
-      <div class="row2">
-        <div class="field">
-          <label>HDMI 輸入訊號</label>
-          <div class="relay-grid">
-            ${RELAY_INPUTS.map(item=>`
-              <div class="group-chip single-chip${s.relayIn==item.n?' on':''}" data-k="relayIn" data-v="${item.n}" onclick="setSingle(this)">
-                <span class="relay-main">IN ${item.n}</span><span class="relay-sub">${item.src}</span>
-              </div>`).join('')}
-          </div>
-        </div>
-        <div class="field">
-          <label>HDMI 輸出訊號</label>
-          <div class="relay-grid">
-            ${RELAY_OUTPUTS.map(n=>`
-              <div class="group-chip single-chip${s.relayOut==n?' on':''}" data-k="relayOut" data-v="${n}" onclick="setSingle(this)">OUT ${n}</div>`).join('')}
-          </div>
-        </div>
-      </div>
-      <div class="field">
-        <label>串到會議室</label>
-        <div class="relay-room-grid">
-          ${(RELAY_ROOMS[cur]||[]).map(room=>`
-            <div class="chip${(s.relayRooms||[]).includes(room)?' on':''}" data-g="relayRooms" data-v="${room}" onclick="toggleChip(this)">${room}</div>`).join('')}
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field"><label>自訂會議室 1</label>
-          <div class="relay-custom">
-            <input id="relayCustom1" placeholder="其他會議室" value="${esc(s.relayCustom1)}">
-            <div class="group-chip single-chip${s.relayCustom1On?' on':''}" data-k="relayCustom1On" data-v="1" onclick="setSingle(this)">套用</div>
-          </div>
-        </div>
-        <div class="field"><label>自訂會議室 2</label>
-          <div class="relay-custom">
-            <input id="relayCustom2" placeholder="其他會議室" value="${esc(s.relayCustom2)}">
-            <div class="group-chip single-chip${s.relayCustom2On?' on':''}" data-k="relayCustom2On" data-v="1" onclick="setSingle(this)">套用</div>
-          </div>
-        </div>
-      </div>
-    `);
 }
 
 /* ── render ── */
 function render(){
   const s=S(),r=RM[cur],d=AD();
+  const avList=avSc(),ltList=ltSc();
   document.getElementById('form').innerHTML=`
 
   <div class="card">
@@ -633,79 +462,109 @@ function render(){
   <div class="card">
     <div class="card-hd"><span class="card-ico">🎬</span><span class="card-lbl">接點 / 電視牆場景</span></div>
     <div class="card-bd">
-      ${avSc().length?`<div class="scene-list">${avSc().map((sc,i)=>avSceneHtml(sc,i)).join('')}</div><div class="draft-sep"></div>`:''}
-      <div class="draft-wrap">
-        <div class="draft-lbl">${editingIdx>=0?`編輯場景 ${editingIdx+1}`:'新增場景'}</div>
-        <div class="field"><label>電視牆模式</label>
-          <div class="tv-modes">${r.tvModes.map(m=>`
-            <div class="tv-chip${d.tvMode===m?' on':''}" data-v="${m}" onclick="setDTvMode(this)">${m}</div>`).join('')}</div>
+      ${avList.length?`<div class="scene-list">${avList.map((sc,i)=>avSceneHtml(sc,i)).join('')}</div><div class="draft-sep"></div>`:''}
+
+      <div class="draft-lbl">${editingIdx>=0?`編輯場景 ${editingIdx+1}`:'新增場景'}</div>
+
+      <div class="field">
+        <label>電視牆模式</label>
+        <div class="tv-modes">
+          ${r.tvModes.map(m=>`
+            <div class="tv-chip${d.tvMode===m?' on':''}" data-v="${m}" onclick="setDTvMode(this)">${m}</div>`).join('')}
         </div>
-        <div class="field"><label>用途標注</label>
-          <div class="pu-chips">${TV_PURPOSES.map(p=>`
-            <div class="pu-chip${d.tvPurpose===p?' on':''}" data-v="${p}" onclick="setDPurpose(this)">${p}</div>`).join('')}</div>
-          <div class="tv-custom"><span>自訂：</span><input id="tvCustom" placeholder="其他說明（選填）" value="${esc(d.tvCustom||'')}"></div>
-        </div>
-        <div class="inner-div"></div>
-        <div id="pending-container">${pendingLinesHtml()}</div>
-        <div id="wf-container">${wfHtml()}</div>
-        ${editingIdx>=0?`
-          <button class="btn-add" onclick="addAv()"><span>✓</span>更新場景 ${editingIdx+1}</button>
-          <button class="btn-clr" onclick="cancelEdit()">取消編輯</button>
-        `:`
-          <button class="btn-add" onclick="addAv()"><span>＋</span>新增確認場景</button>
-        `}
       </div>
+      <div class="field">
+        <label>用途標注</label>
+        <div class="pu-chips">
+          ${TV_PURPOSES.map(p=>`
+            <div class="pu-chip${d.tvPurpose===p?' on':''}" data-v="${p}" onclick="setDPurpose(this)">${p}</div>`).join('')}
+        </div>
+        <div class="tv-custom"><span>自訂：</span>
+          <input id="tvCustom" placeholder="其他說明（選填）" value="${esc(d.tvCustom||'')}">
+        </div>
+      </div>
+
+      <div style="height:1px;background:var(--bd)"></div>
+
+      <div id="pending-container">${pendingLinesHtml()}</div>
+      <div id="wf-container">${wfHtml()}</div>
+
+      ${editingIdx>=0?`
+      <button class="btn-add" onclick="addAv()"><span>✓</span>更新場景 ${editingIdx+1}</button>
+      <button style="width:100%;padding:9px;border:1px solid var(--bd2);border-radius:var(--rs);background:transparent;color:var(--tx2);font-size:13px;cursor:pointer;font-family:inherit" onclick="cancelEdit()">取消編輯</button>
+      `:`
+      <button class="btn-add" onclick="addAv()"><span>＋</span>新增確認場景</button>
+      `}
     </div>
   </div>
 
   <div class="card">
-    <div class="card-hd"><span class="card-ico">🎚️</span><span class="card-lbl">混音機</span></div>
+    <div class="card-hd"><span class="card-ico">🏭</span><span class="card-lbl">廠商</span></div>
     <div class="card-bd">
+      <div class="vendor-opts">${VENDOR_OPTS.map(o=>`
+        <div class="vendor-opt${s.vendor===o.k?' '+o.cls:''}" data-v="${o.k}" onclick="setVendor(this)">
+          <div class="vo-dot"></div>${o.label}
+        </div>`).join('')}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">🎚️</span><span class="card-lbl">混音機 / 音源</span></div>
+    <div class="card-bd">
+      <div class="field"><label>是否有 BGM 背景音樂</label>
+        ${togs('hasBGM','✅ 是，有 BGM','❌ 否')}
+      </div>
+      <div id="bgm-row" style="${s.hasBGM==='是'?'':'display:none'}">
+        <div class="field"><label>BGM 音源</label>
+          <div class="chips">
+            ${BGM_SRC.map(b=>`
+              <div class="chip${(s.bgmSrc||[]).includes(b)?' on':''}" data-g="bgmSrc" data-v="${b}" onclick="toggleChip(this)">${b}</div>`).join('')}
+          </div>
+        </div>
+      </div>
       <div class="field"><label>混音器備註</label>
         <textarea id="mixerNote" placeholder="e.g. CH1 無線麥克風、CH3 客戶電腦音訊...">${esc(s.mixerNote)}</textarea>
       </div>
     </div>
   </div>
 
-  ${cardHtml('vendor','🏭','廠商',vendorHtml())}
-
-  ${cardHtml('lights','💡','燈光設定',`
-      ${ltSceneListHtml()}
-      <div class="draft-wrap">
-        <div class="draft-lbl">新增燈光場景</div>
-        ${r.hasStageLight?`
-        <div class="field">
-          <label>舞台燈光</label>
-          ${ltChips('stage',STAGE_SCENES,'stageLight')}
-        </div>`:''}
-        <div class="field">
-          <label>場燈</label>
-          ${ltChips('room',ROOM_SCENES,'roomLight')}
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">💡</span><span class="card-lbl">燈光設定</span></div>
+    <div class="card-bd">
+      ${ltList.length?`<div class="scene-list">${ltList.map((sc,i)=>ltSceneHtml(sc,i)).join('')}</div><div class="draft-sep"></div>`:''}
+      <div class="draft-lbl">新增燈光場景</div>
+      ${r.hasStageLight?`<div class="field"><label>舞台燈光</label>
+        <div class="lt-chips">${STAGE_SCENES.map(o=>`
+          <div class="lt-chip${LD().stageLight===o?' on':''}" data-k="stageLight" data-v="${o}" onclick="setLtChip(this)">${o}</div>`).join('')}
+        </div></div>`:''}
+      <div class="field"><label>場燈</label>
+        <div class="lt-chips">${ROOM_SCENES.map(o=>`
+          <div class="lt-chip${LD().roomLight===o?' on':''}" data-k="roomLight" data-v="${o}" onclick="setLtChip(this)">${o}</div>`).join('')}
         </div>
-        <div class="field">
-          <label>用途標注</label>
-          <div class="pu-chips">
-            ${TV_PURPOSES.map(p=>`
-              <div class="pu-chip${(LD().ltPurpose||''===p)?LD().ltPurpose===p?' on':'':''}" data-k="ltPurpose" data-v="${p}" onclick="setLtChip(this)">${p}</div>`).join('')}
-          </div>
-        </div>
-        <button class="btn-add btn-add-lt" onclick="addLt()"><span>＋</span>新增確認</button>
       </div>
-    `)}
+      <div class="field"><label>用途標注</label>
+        <div class="pu-chips">${TV_PURPOSES.map(p=>`
+          <div class="pu-chip${LD().ltPurpose===p?' on':''}" data-k="ltPurpose" data-v="${p}" onclick="setLtChip(this)">${p}</div>`).join('')}
+        </div>
+      </div>
+      <button class="btn-add btn-add-lt" onclick="addLt()"><span>＋</span>新增確認</button>
+    </div>
+  </div>
 
-  ${relayHtml(s)}
-
-  ${cardHtml('notes','📝','備註',`
+  <div class="card">
+    <div class="card-hd"><span class="card-ico">📝</span><span class="card-lbl">備註</span></div>
+    <div class="card-bd">
       <div class="field">
-        <textarea id="notes" placeholder="e.g. 特殊接線、注意事項、其他說明...">${esc(s.notes)}</textarea>
+        <textarea id="notes" placeholder="e.g. 特殊接線、注意事項...">${esc(s.notes)}</textarea>
       </div>
-    `)}
+    </div>
+  </div>
 
-  ${cardHtml('test','🧪','測試資訊',`
-      <div class="row2">
-        <div class="field"><label>測試日期</label>
-          <input type="date" id="testDate" value="${s.testDate||today()}">
-        </div>
+  <div class="card test-card">
+    <div class="card-hd"><span class="card-ico">🧪</span><span class="card-lbl">測試資訊</span></div>
+    <div class="card-bd">
+      <div class="field"><label>測試日期</label>
+        <input type="date" id="testDate" value="${s.testDate||today()}">
       </div>
       <div class="field"><label>測試人員</label>
         <div class="chips">
@@ -713,10 +572,11 @@ function render(){
             <div class="chip${(s.testPerson||[]).includes(p)?' on':''}" data-g="testPerson" data-v="${p}" onclick="toggleChip(this)">${p}</div>`).join('')}
         </div>
       </div>
-    `,'test-card')}
+    </div>
+  </div>
 
   <div class="actions">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div class="btn-row">
       <button class="btn-copy" onclick="copyLine()">📋 複製 LINE</button>
       <button class="btn-copy btn-email" onclick="sendEmail()">📧 寄 Email</button>
     </div>
@@ -724,64 +584,27 @@ function render(){
   </div>`;
 }
 
-/* ── draft AV interactions ── */
-function refreshWf(){const el=document.getElementById('wf-container');if(el)el.innerHTML=wfHtml();}
-function refreshPendingLines(){const el=document.getElementById('pending-container');if(el)el.innerHTML=pendingLinesHtml();}
-function wfSetPt(p){
-  const sd=SD(),was=sd.pt===p;
-  sd.pt=was?'':p;
-  if(was||!sd.pt){sd.inN=null;sd.outNs=[];}
-  sav();refreshWf();
-}
-function wfSetIn(n){
-  const sd=SD(),was=sd.inN===n;
-  sd.inN=was?null:n;
-  if(was)sd.outNs=[];
-  sav();refreshWf();
-}
-function wfToggleOut(n){
-  const sd=SD();
-  if(!sd.outNs)sd.outNs=[];
-  const i=sd.outNs.indexOf(n);
-  if(i>=0)sd.outNs.splice(i,1);else sd.outNs.push(n);
-  sav();refreshWf();
-}
-function wfConfirmLine(){
-  const sd=SD();
-  if(!sd.pt||sd.inN==null||!(sd.outNs||[]).length)return;
-  pSigs().push({pt:sd.pt,inN:sd.inN,outNs:[...sd.outNs]});
-  AD().sd={};sav();refreshPendingLines();refreshWf();
-}
-function delPending(i){pSigs().splice(i,1);sav();refreshPendingLines();}
-function setDGroup(v){AD().group=AD().group===v?null:v;sav();refreshWf();}
-function setDTvMode(el){
-  const v=el.dataset.v,d=AD(),was=el.classList.contains('on');
-  document.querySelectorAll('.tv-chip').forEach(c=>c.classList.remove('on'));
-  d.tvMode=was?'':v;if(!was)el.classList.add('on');sav();
-}
-function setDPurpose(el){
-  const v=el.dataset.v,d=AD(),was=el.classList.contains('on');
-  document.querySelectorAll('.pu-chip:not([data-k])').forEach(c=>c.classList.remove('on'));
-  d.tvPurpose=was?'':v;if(!was)el.classList.add('on');sav();
-}
+/* ── scene add / edit / delete ── */
 function addAv(){
   saveFlds();const d=AD();
   if(!pSigs().length&&!d.tvMode){showToast('請至少設定電視牆模式或一條訊號路徑',true);return;}
-  const sc={signals:[...pSigs()],tvMode:d.tvMode||'',tvPurpose:d.tvPurpose||'',tvCustom:(d.tvCustom||'').trim(),group:d.group||null};
+  const sc={signals:[...pSigs()],tvMode:d.tvMode||'',tvPurpose:d.tvPurpose||'',
+            tvCustom:(d.tvCustom||'').trim(),group:d.group||null};
   if(editingIdx>=0){avSc()[editingIdx]=sc;editingIdx=-1;}
-  else avSc().push(sc);
+  else{avSc().push(sc);}
   S().avDraft={sigs:[],sd:{}};sav();render();
 }
 function editAv(i){
   const sc=avSc()[i];
-  S().avDraft={sigs:[...sceneSignals(sc)],sd:{},tvMode:sc.tvMode||'',tvPurpose:sc.tvPurpose||'',tvCustom:sc.tvCustom||'',group:sc.group||null};
+  S().avDraft={sigs:[...(sc.signals||[])],sd:{},
+    tvMode:sc.tvMode||'',tvPurpose:sc.tvPurpose||'',
+    tvCustom:sc.tvCustom||'',group:sc.group||null};
   editingIdx=i;sav();render();
   document.querySelector('.draft-lbl')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function cancelEdit(){editingIdx=-1;S().avDraft={sigs:[],sd:{}};sav();render();}
 function delAv(i){if(editingIdx===i)editingIdx=-1;avSc().splice(i,1);sav();render();}
 
-/* ── draft lighting ── */
 function setLtChip(el){
   const k=el.dataset.k,v=el.dataset.v,was=el.classList.contains('on');
   document.querySelectorAll(`[data-k="${k}"]`).forEach(c=>c.classList.remove('on'));
@@ -795,7 +618,22 @@ function addLt(){
 }
 function delLt(i){ltSc().splice(i,1);sav();render();}
 
-/* ── general chips ── */
+/* ── TV mode / purpose (update without re-render) ── */
+function setDGroup(v){
+  AD().group=AD().group===v?null:v;sav();refreshWf();
+}
+function setDTvMode(el){
+  const v=el.dataset.v,was=el.classList.contains('on');
+  document.querySelectorAll('.tv-chip').forEach(c=>c.classList.remove('on'));
+  AD().tvMode=was?'':v;if(!was)el.classList.add('on');sav();
+}
+function setDPurpose(el){
+  const v=el.dataset.v,was=el.classList.contains('on');
+  document.querySelectorAll('.pu-chip:not([data-k])').forEach(c=>c.classList.remove('on'));
+  AD().tvPurpose=was?'':v;if(!was)el.classList.add('on');sav();
+}
+
+/* ── general chip / toggles ── */
 function toggleChip(el){
   const g=el.dataset.g,v=el.dataset.v;
   if(!S()[g])S()[g]=[];
@@ -803,25 +641,12 @@ function toggleChip(el){
   else{S()[g]=S()[g].filter(x=>x!==v);}
   sav();
 }
-function toggleCollapse(key){
-  saveFlds();
-  if(!S().collapsed)S().collapsed={};
-  S().collapsed[key]=!S().collapsed[key];
-  sav();render();
-}
-function setSingle(el){
-  const k=el.dataset.k,v=el.dataset.v,was=el.classList.contains('on');
-  document.querySelectorAll(`.single-chip[data-k="${k}"]`).forEach(c=>c.classList.remove('on'));
-  S()[k]=was?'':v;if(!was)el.classList.add('on');sav();
-}
-
-/* ── toggles ── */
 function togs(key,yL,nL){
   const v=S()[key]||'';
-  const base='padding:9px;border:1px solid;border-radius:var(--rs);font-size:13px;font-weight:500;cursor:pointer;text-align:center;transition:all .15s;user-select:none;';
+  const b='padding:9px;border:1px solid;border-radius:var(--rs);font-size:13px;font-weight:500;cursor:pointer;text-align:center;user-select:none;';
   return`<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
-    <div style="${base}background:${v==='是'?'var(--ok-bg)':'var(--sf2)'};border-color:${v==='是'?'var(--ok-bd)':'var(--bd2)'};color:${v==='是'?'var(--ok)':'var(--tx2)'}" data-k="${key}" data-v="是" onclick="doTog(this)">${yL}</div>
-    <div style="${base}background:${v==='否'?'var(--no-bg)':'var(--sf2)'};border-color:${v==='否'?'var(--no-bd)':'var(--bd2)'};color:${v==='否'?'var(--no)':'var(--tx2)'}" data-k="${key}" data-v="否" onclick="doTog(this)">${nL}</div>
+    <div style="${b}background:${v==='是'?'var(--ok-bg)':'var(--sf2)'};border-color:${v==='是'?'var(--ok-bd)':'var(--bd2)'};color:${v==='是'?'var(--ok)':'var(--tx2)'}" data-k="${key}" data-v="是" onclick="doTog(this)">${yL}</div>
+    <div style="${b}background:${v==='否'?'var(--no-bg)':'var(--sf2)'};border-color:${v==='否'?'var(--no-bd)':'var(--bd2)'};color:${v==='否'?'var(--no)':'var(--tx2)'}" data-k="${key}" data-v="否" onclick="doTog(this)">${nL}</div>
   </div>`;
 }
 function doTog(el){
@@ -829,7 +654,6 @@ function doTog(el){
   if(k==='hasBGM'){const r=document.getElementById('bgm-row');if(r)r.style.display=v==='是'?'':'none';}
   else render();
 }
-
 function setVendor(el){
   S().vendor=el.dataset.v;sav();
   document.querySelectorAll('.vendor-opt').forEach(o=>{
@@ -842,7 +666,7 @@ function setArrive(val,el){
   el.classList.add('on');S().arrive=val;sav();
 }
 function sw(room,el){
-  saveFlds();cur=room;
+  saveFlds();cur=room;editingIdx=-1;
   document.querySelectorAll('.rtab').forEach(t=>t.classList.remove('on'));
   el.classList.add('on');render();
 }
@@ -850,31 +674,19 @@ function saveFlds(){
   document.querySelectorAll('#form input[id],#form select[id],#form textarea[id]').forEach(el=>{
     if(el.id==='tvCustom')AD().tvCustom=el.value;
     else S()[el.id]=el.value;
-  });
-  sav();
+  });sav();
 }
 
-/* ── shared content builder ── */
+/* ── content / copy / email ── */
+function gv(id){return(S()[id]||'').trim()||'─'}
 function buildContent(){
   saveFlds();const s=S();
   const ts=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+  const bgmSrcs=s.bgmSrc||[];
   const vendorLabel={none:'無廠商',audio:'有廠商・自帶音響',sys:'有廠商・接系統'}[s.vendor||'']||'─';
-  const sep='━━━━━━━';
-  const branchEnd='  └──────';
-  const treeLine=(label,value)=>`└ ${label}：${value||'─'}`;
-  const sceneRouteLines=sc=>{
-    const byPt={};
-    sceneSignals(sc).forEach(sig=>{
-      const out=sig.outNs&&sig.outNs.length?` → ${outLbl(sig.outNs)}`:'';
-      if(!byPt[sig.pt])byPt[sig.pt]=[];
-      byPt[sig.pt].push(`${inLbl(sig.inN)}${out}`);
-    });
-    return Object.keys(byPt).map(pt=>`  │ ${pt} → ${byPt[pt].join(', ')}`);
-  };
-
   const rows=[
 `【${RM[cur].label} 中控交接清單】`,
-sep,
+`━━━━━━━━━━━━━━━━━`,
 `📋 活動：${gv('eventName')}`,
 `📅 日期：${gv('eventDate')}`,
 `⏰ 到場時間：${s.arrive||'─'}`,
@@ -884,22 +696,19 @@ sep,
   const asc=avSc();
   if(asc.length){
     asc.forEach((sc,i)=>{
-      rows.push(`  ┌ 場景${i+1}`);
-      const sigLines=sceneRouteLines(sc);
-      if(sigLines.length)rows.push(...sigLines);
-      else rows.push(`  │ 尚未設定訊號路徑`);
       const tv=[sc.tvMode,sc.tvPurpose,(sc.tvCustom||'').trim()].filter(Boolean).join(' · ');
-      if(tv)rows.push(`  │ 📺 ${tv}`);
-      if(sc.group)rows.push(`  │ 套用：群組${sc.group}`);
-      else if((sc.groups||[]).length)rows.push(`  │ 套用：${sc.groups.join('、')}`);
-      rows.push(branchEnd);
+      const grp=sc.group?` ／ 群組${sc.group}`:'';
+      rows.push(`  ┌ 場景${i+1}${tv?' 【'+tv+'】':''}${grp}`);
+      (sc.signals||[]).forEach(sig=>{
+        rows.push(`  │ ${sig.pt} → ${inLbl(sig.inN)} → ${outLbl(sig.outNs||[sig.outN])}`);
+      });
+      rows.push(`  └${'─'.repeat(16)}`);
     });
-  }else rows.push(`  尚未設定場景`);
-
+  }else rows.push('  尚未設定場景');
   rows.push(``,`🏭 廠商：${vendorLabel}`);
-  rows.push(``,`🎚️ 混音機`);
-  rows.push(treeLine('混音備註',(s.mixerNote||'').trim()||'─'));
-
+  rows.push(``,`🎚️ 混音機 / 音源`);
+  rows.push(`└ BGM：${s.hasBGM||'─'}${s.hasBGM==='是'&&bgmSrcs.length?' ('+bgmSrcs.join('、')+')':''}`);
+  if((s.mixerNote||'').trim())rows.push(`└ 混音備註：${s.mixerNote.trim()}`);
   rows.push(``,`💡 燈光設定`);
   const lsc=ltSc();
   if(lsc.length){
@@ -907,50 +716,29 @@ sep,
       rows.push(`  ┌ 燈光${i+1}${sc.purpose?' 【'+sc.purpose+'】':''}`);
       if(RM[cur].hasStageLight&&sc.stageLight)rows.push(`  │ 舞台：${sc.stageLight}`);
       if(sc.roomLight)rows.push(`  │ 場燈：${sc.roomLight}`);
-      rows.push(branchEnd);
+      rows.push(`  └${'─'.repeat(16)}`);
     });
-  }else rows.push(`  尚未設定燈光場景`);
-
-  const relayRooms=[...(s.relayRooms||[])];
-  if(s.relayCustom1On&&(s.relayCustom1||'').trim())relayRooms.push(s.relayCustom1.trim());
-  if(s.relayCustom2On&&(s.relayCustom2||'').trim())relayRooms.push(s.relayCustom2.trim());
-  if(s.relayIn||s.relayOut||relayRooms.length){
-    rows.push(``,`🔁 串場需求`);
-    rows.push(treeLine('HDMI',`${relayInText(s.relayIn)} → ${relayOutText(s.relayOut)}`));
-    rows.push(treeLine('會議室',relayRooms.join('、')||'─'));
-  }
-
+  }else rows.push('  尚未設定燈光場景');
   if((s.notes||'').trim())rows.push(``,`📝 備註：${s.notes.trim()}`);
   rows.push(``,`🧪 測試資訊`);
-  rows.push(treeLine('測試日期',gv('testDate')));
-  rows.push(treeLine('測試人員',(s.testPerson||[]).join('、')||'─'));
-  rows.push(`⏱ 填表：${ts}`);
-  rows.push(sep);
+  rows.push(`└ 測試日期：${gv('testDate')}`);
+  rows.push(`└ 測試人員：${(s.testPerson||[]).join('、')||'─'}`);
+  rows.push(`⏱ 填表：${ts}`,`━━━━━━━━━━━━━━━━━`);
   return rows.join('\n');
 }
-
-/* ── LINE copy ── */
-function gv(id){return(S()[id]||'').trim()||'─'}
 function copyLine(){
   const txt=buildContent();
   const fb=()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('✅ 已複製！直接貼到 LINE')};
   if(navigator.clipboard?.writeText){navigator.clipboard.writeText(txt).then(()=>showToast('✅ 已複製！直接貼到 LINE')).catch(fb)}else fb();
 }
 function sendEmail(){
-  saveFlds();const s=S();
-  const subject=`【${RM[cur].label} 中控交接清單】${gv('eventDate')} ${gv('eventName')}`;
   const body=buildContent();
-  // copy body to clipboard
-  const doCopy=()=>{
-    const ta=document.createElement('textarea');ta.value=body;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-  };
-  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(body).catch(doCopy);}else doCopy();
-  // open email client
-  const mailto=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(mailto,'_blank');
+  const subject=`【${RM[cur].label} 中控交接清單】${gv('eventDate')} ${gv('eventName')}`;
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=body;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta)};
+  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(body).catch(fb);}else fb();
+  window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,'_blank');
   showToast('📧 已開啟郵件，內容也已複製');
 }
-
 function showToast(msg,err){
   const t=document.getElementById('toast');
   t.textContent=msg;t.className='toast'+(err?' err':'')+' show';
@@ -958,7 +746,7 @@ function showToast(msg,err){
 }
 function clearForm(){
   if(!confirm(`清除 ${RM[cur].label} 所有資料？`))return;
-  st[cur]={avScenes:[],avDraft:{},ltScenes:[],ltDraft:{},collapsed:{...COLLAPSE_DEFAULTS},collapsePreset:COLLAPSE_PRESET};sav();render();
+  st[cur]={avScenes:[],avDraft:{sigs:[],sd:{}},ltScenes:[],ltDraft:{}};sav();render();
 }
 document.addEventListener('input',e=>{
   if(!e.target.id)return;
